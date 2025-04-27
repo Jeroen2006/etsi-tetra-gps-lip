@@ -65,6 +65,10 @@ class ElementReasonForSending extends ElementScaffold {
         return Object.values(def).includes(value);
     }
 
+    static isValidReason(reason) {
+        return Object.keys(def).includes(reason);
+    }
+
     static get def() {
         return def;
     }

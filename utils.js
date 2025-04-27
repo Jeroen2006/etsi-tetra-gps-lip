@@ -24,7 +24,16 @@ function binaryToHex(bits) {
     return hexString.toUpperCase();
   }
 
+
+function binaryToBigInt(binaryString) {
+    if (typeof binaryString !== 'string' || !/^[01]+$/.test(binaryString)) {
+        throw new Error('Invalid binary string.');
+    }
+
+    return BigInt('0b' + binaryString);
+}
 module.exports = {
     hexToBinaryString,
-    binaryToHex
+    binaryToHex,
+    binaryToBigInt
 };
