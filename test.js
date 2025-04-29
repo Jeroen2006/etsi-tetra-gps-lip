@@ -2,19 +2,19 @@ const { ElementType5LocationInformationDestination, ElementSSI } = require("./ex
 
 // ->>>>>> http://pdu.argos.ws/LIP_PDU_Generator/LIP_PDU_Generator.htm 
 
-const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
-const targetSsi = new ElementSSI(9999);
-const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
-const immediateLocationReportRequest = new PduImmediateLocationReportRequest({
-    reportType: "LONG-WITH-TIME-OF-POSITION",
-    type5Elements: [locationInformationDestination]
-});
+// const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
+// const targetSsi = new ElementSSI(9999);
+// const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
+// const immediateLocationReportRequest = new PduImmediateLocationReportRequest({
+//     reportType: "LONG-WITH-TIME-OF-POSITION",
+//     type5Elements: [locationInformationDestination]
+// });
 
-const reversePdu = PduImmediateLocationReportRequest.fromData(immediateLocationReportRequest.toData());
+// const reversePdu = PduImmediateLocationReportRequest.fromData(immediateLocationReportRequest.toData());
 
 //console.log('locationInformationDestination', locationInformationDestination.toBinary())
-console.log(immediateLocationReportRequest.type5Elements)
-console.log(reversePdu.type5Elements)
+// console.log(immediateLocationReportRequest.toData())
+// console.log(reversePdu.type5Elements)
 
 
 
@@ -25,7 +25,7 @@ console.log(reversePdu.type5Elements)
 // console.log(shortReport, shortReport.toData())
 
 // const PduLongLocationReport = require("./pdu/LongLocationReport");
-// const testdata = "4EEA7B6900BDF8C93E9DC1DA0200";
+// const testdata = "4EEBD55100BDF5E93E9E41900200";
 // const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
 // console.log(longReport.toData(), testdata.split(" ").join(""))
 // console.log(longReport)

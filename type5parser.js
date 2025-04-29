@@ -20,8 +20,6 @@ function parseType5Elements(data){
     const allZeros = bits.every(bit => bit === "0");
     if (allZeros) return elements;
 
-    console.log(data)
-
     while(data.length > 0){
         const elementIdentifierBits = data.slice(0, 5);
         const { elementIdentifier } = ElementType5ElementIdentifier.fromValue(elementIdentifierBits);
