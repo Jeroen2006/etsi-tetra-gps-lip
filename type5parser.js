@@ -15,6 +15,11 @@ const ElementType5LocationInformationDestination = require('./elements/type-5/Ty
 function parseType5Elements(data){
     const elements = [];
 
+    //if data is all zeros (length can variate), return empty array
+    const bits = data.split("");
+    const allZeros = bits.every(bit => bit === "0");
+    if (allZeros) return elements;
+
     while(data.length > 0){
         const elementIdentifierBits = data.slice(0, 5);
         const { elementIdentifier } = ElementType5ElementIdentifier.fromValue(elementIdentifierBits);

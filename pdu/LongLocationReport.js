@@ -43,37 +43,43 @@ class PduLongLocationReport {
         this.pduType = new ElementPduType("LOCATION-PROTOCOL-PDU-WITH-EXTENSION");
         this.pduTypeExtension = new ElementPduTypeExtension("LONG-LOCATION-REPORT");
         
-        if (timeData instanceof ElementTimeOfPosition || timeData instanceof ElementTimeElapsed) {
-            this.timeData = timeData;
-        } else {
-            throw new Error("Invalid timeData type. Must be an instance of ElementTimeOfPosition or ElementTimeElapsed.");
+        if(timeData != null && timeData != undefined && timeData != ""){
+            if (timeData instanceof ElementTimeOfPosition || timeData instanceof ElementTimeElapsed) {
+                this.timeData = timeData;
+            } else {
+                throw new Error("Invalid timeData type. Must be an instance of ElementTimeOfPosition or ElementTimeElapsed.");
+            }
         }
 
-        if (locationData instanceof ElementLocationEllipseWithAltitudeAndUncertainty ||
-            locationData instanceof ElementLocationEllipseWithAltitude ||
-            locationData instanceof ElementLocationEllipse ||
-            locationData instanceof ElementLocationPoint ||
-            locationData instanceof ElementLocationPointWithAltitude ||
-            locationData instanceof ElementLocationPointAndPositionError ||
-            locationData instanceof ElementLocationCircle ||
-            locationData instanceof ElementLocationCircleWithAltitude ||
-            locationData instanceof ElementLocationCircleWithAltitudeAndUncertainty ||
-            locationData instanceof ElementLocationArc) {
-            this.locationData = locationData;
-        } else {
-            throw new Error("Invalid locationData type. Must be an instance of ElementLocationEllipseWithAltitudeAndUncertainty, ElementLocationEllipseWithAltitude, ElementLocationEllipse, ElementLocationPoint, ElementLocationPointWithAltitude, ElementLocationPointAndPositionError, ElementLocationCircle, ElementLocationCircleWithAltitude, ElementLocationCircleWithAltitudeAndUncertainty, or ElementLocationArc.");
+        if(locationData != null && locationData != undefined && locationData != ""){
+            if (locationData instanceof ElementLocationEllipseWithAltitudeAndUncertainty ||
+                locationData instanceof ElementLocationEllipseWithAltitude ||
+                locationData instanceof ElementLocationEllipse ||
+                locationData instanceof ElementLocationPoint ||
+                locationData instanceof ElementLocationPointWithAltitude ||
+                locationData instanceof ElementLocationPointAndPositionError ||
+                locationData instanceof ElementLocationCircle ||
+                locationData instanceof ElementLocationCircleWithAltitude ||
+                locationData instanceof ElementLocationCircleWithAltitudeAndUncertainty ||
+                locationData instanceof ElementLocationArc) {
+                this.locationData = locationData;
+            } else {
+                throw new Error("Invalid locationData type. Must be an instance of ElementLocationEllipseWithAltitudeAndUncertainty, ElementLocationEllipseWithAltitude, ElementLocationEllipse, ElementLocationPoint, ElementLocationPointWithAltitude, ElementLocationPointAndPositionError, ElementLocationCircle, ElementLocationCircleWithAltitude, ElementLocationCircleWithAltitudeAndUncertainty, or ElementLocationArc.");
+            }
         }
 
-        if (velocityData instanceof ElementHorizontalVelocity ||
-            velocityData instanceof ElementHorizontalVelocityWithUncertainty ||
-            velocityData instanceof ElementHorizontalAndVerticalVelocity ||
-            velocityData instanceof ElementHorizontalAndVerticalVelocityWithUncertainty ||
-            velocityData instanceof ElementHorizontalVelocityWithDirectionOfTravelExtended ||
-            velocityData instanceof ElementHorizontalVelocityWithDirectionOfTravelExtendedAndUncertainty ||
-            velocityData instanceof ElementHorizontalAndVerticalVelocityWithDirectionOfTravelExtendedAndUncertainty) {
-            this.velocityData = velocityData;
-        } else {
-            throw new Error("Invalid velocityData type. Must be an instance of ElementHorizontalVelocity, ElementHorizontalVelocityWithUncertainty, ElementHorizontalAndVerticalVelocity, ElementHorizontalAndVerticalVelocityWithUncertainty, ElementHorizontalVelocityWithDirectionOfTravelExtended, ElementHorizontalVelocityWithDirectionOfTravelExtendedAndUncertainty, or ElementHorizontalAndVerticalVelocityWithDirectionOfTravelExtendedAndUncertainty.");
+        if(velocityData != null && velocityData != undefined && velocityData != ""){
+            if (velocityData instanceof ElementHorizontalVelocity ||
+                velocityData instanceof ElementHorizontalVelocityWithUncertainty ||
+                velocityData instanceof ElementHorizontalAndVerticalVelocity ||
+                velocityData instanceof ElementHorizontalAndVerticalVelocityWithUncertainty ||
+                velocityData instanceof ElementHorizontalVelocityWithDirectionOfTravelExtended ||
+                velocityData instanceof ElementHorizontalVelocityWithDirectionOfTravelExtendedAndUncertainty ||
+                velocityData instanceof ElementHorizontalAndVerticalVelocityWithDirectionOfTravelExtendedAndUncertainty) {
+                this.velocityData = velocityData;
+            } else {
+                throw new Error("Invalid velocityData type. Must be an instance of ElementHorizontalVelocity, ElementHorizontalVelocityWithUncertainty, ElementHorizontalAndVerticalVelocity, ElementHorizontalAndVerticalVelocityWithUncertainty, ElementHorizontalVelocityWithDirectionOfTravelExtended, ElementHorizontalVelocityWithDirectionOfTravelExtendedAndUncertainty, or ElementHorizontalAndVerticalVelocityWithDirectionOfTravelExtendedAndUncertainty.");
+            }
         }
 
         this.acknowledgementRequest = acknowledgementRequest;
@@ -183,7 +189,7 @@ class PduLongLocationReport {
         var velocityData;
         const velocityTypeValue = binaryString.slice(bitCounter, bitCounter + 3);
         const { velocityType } = ElementVelocityType.fromValue(velocityTypeValue);
-        if(velocityType === "NO-VELOCITY"){
+        if(velocityType === "NO-VELOCITY-INFORMATION"){
             bitCounter += 3;
         } else if (velocityType === "HORIZONTAL-VELOCITY"){
             const velocityDataValue = binaryString.slice(bitCounter, bitCounter + 10);
@@ -213,6 +219,8 @@ class PduLongLocationReport {
             const velocityDataValue = binaryString.slice(bitCounter, bitCounter + 35);
             velocityData = ElementHorizontalAndVerticalVelocityWithDirectionOfTravelExtendedAndUncertainty.fromValue(velocityDataValue);
             bitCounter += 35;
+        } else {
+            throw new Error(`Unknown velocity type: ${velocityType}`);
         }
 
         const acknowledgementRequestValue = binaryString.slice(bitCounter, bitCounter + 1);
@@ -241,17 +249,15 @@ class PduLongLocationReport {
     }
 
     toData(){
-        const pduType = this.pduType.toBinary();
-        const pduTypeExtension = this.pduTypeExtension.toBinary();
-        const timeType = this.timeData.toBinary();
-        const locationShape = this.locationData.toBinary();
-        const velocityType = this.velocityData.toBinary();
-        const acknowledgementRequest = this.acknowledgementRequest ? "1" : "0";
-        const typeOfAdditionalData = new ElementTypeOfAdditionalData("REASON-FOR-SENDING").toBinary();
-        const reasonForSending = this.reasonForSending.toBinary();
+        var binaryString =  this.pduType.toBinary();
+        binaryString += this.pduTypeExtension.toBinary();
+        if(this.timeData != null) binaryString += this.timeData.toBinary();
+        if(this.locationData != null) binaryString += this.locationData.toBinary();
+        if(this.velocityData != null) binaryString += this.velocityData.toBinary();
+        binaryString += this.acknowledgementRequest ? "1" : "0";
+        binaryString += new ElementTypeOfAdditionalData("REASON-FOR-SENDING").toBinary();
+        binaryString += this.reasonForSending.toBinary();
 
-        var binaryString = pduType + pduTypeExtension + timeType + locationShape + velocityType + acknowledgementRequest + typeOfAdditionalData + reasonForSending;
-        
         for(const type5Element of this.type5Elements){
             binaryString += type5Element.toBinary();
         }
