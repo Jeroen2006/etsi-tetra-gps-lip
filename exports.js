@@ -1,8 +1,11 @@
+//will be updated when all the work is done
+
 const PduShortLocationReport = require("./pdu/ShortLocationReport");
 const PduLongLocationReport = require("./pdu/LongLocationReport");
 const PduLocationReportAcknowledgement = require("./pdu/LocationReportAcknowledgement");
 const PduBasicLocationParametersRequest = require("./pdu/BasicLocationParametersRequest");
 const PduBasicLocationParametersResponse = require("./pdu/BasicLocationParametersResponse");
+const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
 
 const ElementLatitude = require("./elements/Latitude");
 const ElementLongitude = require("./elements/Longitude");
@@ -66,6 +69,8 @@ const ElementType5StartTime = require("./elements/type-5/Type5StartTime");
 const ElementType5StatusValue = require("./elements/type-5/Type5StatusValue");
 const ElementType5StopTime = require("./elements/type-5/Type5StopTime");
 const ElementType5TerminalOrLocationIdentification = require("./elements/type-5/Type5TerminalOrLocationIdentification");
+const ElementType5SDSType1Value = require("./elements/type-5/Type5SDSType1Value");
+const ElementType5LocationMessageReference = require("./elements/type-5/Type5LocationMessageReference");
 
 const ElementAddressOrIdentificationType = require("./elements/type-5/address/AddressOrIdentificationType");
 const NoAddress = require("./elements/type-5/address/NoAddress");
@@ -78,6 +83,7 @@ module.exports = {
     PduLocationReportAcknowledgement,
     PduBasicLocationParametersRequest,
     PduBasicLocationParametersResponse,
+    PduImmediateLocationReportRequest,
 
     ElementLatitude,
     ElementLongitude,
@@ -139,6 +145,8 @@ module.exports = {
     ElementType5StatusValue,
     ElementType5StopTime,
     ElementType5TerminalOrLocationIdentification,
+    ElementType5SDSType1Value,
+    ElementType5LocationMessageReference,
 
     ElementAddressOrIdentificationType,
     NoAddress,

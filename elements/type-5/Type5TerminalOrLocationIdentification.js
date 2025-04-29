@@ -18,15 +18,15 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
         }
 
         this.elementIdentifier = new ElementType5ElementIdentifier("TERMINAL-OR-LOCATION-IDENTIFICATION");
-        this.elementLength = new ElementType5ElementLength(terminalOrLocationIdentification.length);
+        this.elementLength = new ElementType5ElementLength(terminalOrLocationIdentification.length + 4);
         this.terminalOrLocationIdentification = terminalOrLocationIdentification;
+        this.addressOrIdentificationType = new ElementAddressOrIdentificationType(terminalOrLocationIdentification.addressOrIdentificationType);
 
 
         const elementIdentifierBits = this.elementIdentifier.toBinary();
         const elementLengthBits = this.elementLength.toBinary();
-        const terminalOrLocationIdentificationBits = terminalOrLocationIdentification.toBinary();
+        const terminalOrLocationIdentificationBits = this.addressOrIdentificationType.toBinary() + terminalOrLocationIdentification.toBinary();
         var bitString = elementIdentifierBits + elementLengthBits + terminalOrLocationIdentificationBits;
-
         this.value = binaryToBigInt(bitString);
         this.length = bitString.length;
     }

@@ -13,6 +13,7 @@ const ElementType5TerminalOrLocationIdentification = require('./elements/type-5/
 const ElementType5LocationInformationDestination = require('./elements/type-5/Type5LocationInformationDestination');
 const ElementType5LocationMessageReference = require('./elements/type-5/Type5LocationMessageReference');
 const ElementType5SDSType1Value = require('./elements/type-5/Type5SDSType1Value');
+const ElementType5TriggerDefinition = require('./elements/type-5/Type5TriggerDefinition');
 
 function parseType5Elements(data){
     const elements = [];
@@ -77,6 +78,9 @@ function parseType5Elements(data){
             case "SDS-TYPE-1-VALUE":
                 element = ElementType5SDSType1Value.fromValue(elementBits);
                 break;
+            case "TRIGGER-DEFINITION":
+                element = ElementType5TriggerDefinition.fromValue(elementBits);
+                break;  
             case "EXTENDED-TYPE-5-ELEMENT":
                 // Handle extended type 5 elements here
                 throw new Error("Extended Type 5 Elements are not supported yet.");

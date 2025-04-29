@@ -20,11 +20,12 @@ class ElementType5LocationInformationDestination extends ElementScaffold {
         this.elementIdentifier = new ElementType5ElementIdentifier("LOCATION-INFORMATION-DESTINATION");
         this.elementLength = new ElementType5ElementLength(locationInformationDestination.length + 4);
         this.locationInformationDestination = locationInformationDestination;
+        this.addressOrIdentificationType = new ElementAddressOrIdentificationType(locationInformationDestination.addressOrIdentificationType);
 
 
         const elementIdentifierBits = this.elementIdentifier.toBinary();
         const elementLengthBits = this.elementLength.toBinary();
-        const locationInformationDestinationBits = "0001" + locationInformationDestination.toBinary();
+        const locationInformationDestinationBits = this.addressOrIdentificationType.toBinary() + locationInformationDestination.toBinary();
         var bitString = elementIdentifierBits + elementLengthBits + locationInformationDestinationBits;
         this.value = binaryToBigInt(bitString);
         this.length = bitString.length;

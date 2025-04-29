@@ -268,8 +268,6 @@ class PduLongLocationReport {
         for(const type5Element of this.type5Elements){
             binaryString += type5Element.toBinary();
         }
-
-        console.log(binaryString)
         
         const hexString = binaryToHex(binaryString);
 

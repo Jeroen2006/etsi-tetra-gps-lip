@@ -13,9 +13,15 @@ function hexToBinaryString(hexString) {
 }
 
 function binaryToHex(bits) {
-    const bigInt = binaryToBigInt(bits);
-    const hexString = bigInt.toString(16).toUpperCase();
-    return hexString
+    const octets = bits.match(/.{1,4}/g); // Split into groups of 4 bits
+    if (octets[octets.length - 1].length < 4) octets[octets.length - 1] = octets[octets.length - 1].padEnd(4, '0');
+
+    const hex = octets.map(octet => parseInt(octet, 2).toString(16).toUpperCase()).join('');
+    return hex;
+
+    // const bigInt = binaryToBigInt(bits);
+    // const hexString = bigInt.toString(16).toUpperCase();
+    // return hexString
 }
 
 function secondsToString(rawSeconds){
@@ -28,11 +34,28 @@ function secondsToString(rawSeconds){
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    const formattedSeconds = seconds > 0 ? `${seconds}s` : '';
-    const formattedMinutes = minutes > 0 ? `${minutes % 60}m` : '';
-    const formattedHours = hours > 0 ? `${hours % 24}h` : '';
-    const formattedDays = days > 0 ? `${days}d` : '';
+    var formattedSeconds = seconds > 0 ? `${seconds}s` : '';
+    var formattedMinutes = minutes > 0 ? `${minutes % 60}m` : '';
+    var formattedHours = hours > 0 ? `${hours % 24}h` : '';
+    var formattedDays = days > 0 ? `${days}d` : '';
+
+    if(formattedMinutes == '0m') formattedMinutes = '';
+    if(formattedHours == '0h') formattedHours = '';
+    if(formattedSeconds == '0s') formattedSeconds = '';
+    if(formattedDays == '0d') formattedDays = '';
+    
     return `${formattedDays}${formattedHours}${formattedMinutes}${formattedSeconds}`.trim();
+}
+
+function metersToString(meters){
+    if(meters < 1000){
+        return `${meters}m`;
+    } 
+
+    const kilometers = meters / 1000;
+    const hectometers = Math.floor(kilometers * 10) / 10;
+
+    return `${hectometers}km`;
 }
 
 
@@ -83,5 +106,6 @@ module.exports = {
     binaryToHex,
     binaryToBigInt,
     secondsToString,
-    convertToDataElements
+    convertToDataElements,
+    metersToString
 };
