@@ -251,9 +251,16 @@ class PduLongLocationReport {
     toData(){
         var binaryString =  this.pduType.toBinary();
         binaryString += this.pduTypeExtension.toBinary();
+
         if(this.timeData != null) binaryString += this.timeData.toBinary();
+        if(this.timeData == null) binaryString += "00" // No time information
+        
         if(this.locationData != null) binaryString += this.locationData.toBinary();
+        if(this.locationData == null) binaryString += "0000" // No location information
+
         if(this.velocityData != null) binaryString += this.velocityData.toBinary();
+        if(this.velocityData == null) binaryString += "000" // No velocity information
+
         binaryString += this.acknowledgementRequest ? "1" : "0";
         binaryString += new ElementTypeOfAdditionalData("REASON-FOR-SENDING").toBinary();
         binaryString += this.reasonForSending.toBinary();
