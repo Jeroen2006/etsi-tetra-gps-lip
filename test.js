@@ -30,7 +30,6 @@ const { ElementType5LocationInformationDestination, ElementSSI } = require("./ex
 // console.log(longReport.toData(), testdata.split(" ").join(""))
 // console.log(longReport)
 
-
 // const PduLocationReportAcknowledgement = require("./pdu/LocationReportAcknowledgement");
 // const testdata = "50 00";
 // const locationReportAcknowledgement = PduLocationReportAcknowledgement.fromData(testdata.split(" ").join(""));

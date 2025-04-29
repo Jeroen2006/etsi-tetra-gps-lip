@@ -13,16 +13,6 @@ function hexToBinaryString(hexString) {
 }
 
 function binaryToHex(bits) {
-    // var hexString = '';
-    // for (var i = 0; i < bits.length; i += 8) {
-    //     var hexDigit = parseInt(bits.substr(i, 8), 2).toString(16);
-    //     if (hexDigit.length < 2) hexDigit = '0' + hexDigit;
-
-    //     hexString += hexDigit;
-    // }
-  
-    // return hexString.toUpperCase();
-
     const bigInt = binaryToBigInt(bits);
     const hexString = bigInt.toString(16).toUpperCase();
     return hexString
@@ -53,9 +43,45 @@ function binaryToBigInt(binaryString) {
 
     return BigInt('0b' + binaryString);
 }
+
+function convertToDataElements(object){
+    const filterKeys = ['length', 'type', 'value', 'binary', 'elementLength'];
+
+    const newObject = {};
+    for (const key in object) {
+        const item = object[key];
+        
+        if (item instanceof Object) {
+            newObject[key] = convertToDataElements(item);
+        } else {
+            if (filterKeys.includes(key)) continue;
+            newObject[key] = item;
+        }
+    }
+
+    for (const key in newObject) {
+        const item = newObject[key];
+        if (item instanceof Object && item[key]) {
+            newObject[key] = item[key];
+        }
+    }
+
+    for (const key in newObject) {
+        const item = newObject[key];
+        if (item instanceof Object) {
+            for (const filterKey of filterKeys) {
+                delete item[filterKey];
+            }
+        }
+    }
+
+    return newObject;
+}
+
 module.exports = {
     hexToBinaryString,
     binaryToHex,
     binaryToBigInt,
-    secondsToString
+    secondsToString,
+    convertToDataElements
 };

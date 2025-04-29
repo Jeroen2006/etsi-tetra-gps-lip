@@ -11,16 +11,19 @@ const ElementType5StopTime = require('./elements/type-5/Type5StopTime');
 const ElementType5StatusValue = require('./elements/type-5/Type5StatusValue');
 const ElementType5TerminalOrLocationIdentification = require('./elements/type-5/Type5TerminalOrLocationIdentification');
 const ElementType5LocationInformationDestination = require('./elements/type-5/Type5LocationInformationDestination');
+const ElementType5LocationMessageReference = require('./elements/type-5/Type5LocationMessageReference');
+const ElementType5SDSType1Value = require('./elements/type-5/Type5SDSType1Value');
 
 function parseType5Elements(data){
     const elements = [];
 
     //if data is all zeros (length can variate), return empty array
-    const bits = data.split("");
-    const allZeros = bits.every(bit => bit === "0");
-    if (allZeros) return elements;
 
     while(data.length > 0){
+        const bits = data.split("");
+        const allZeros = bits.every(bit => bit === "0");
+        if (allZeros) return elements;
+
         const elementIdentifierBits = data.slice(0, 5);
         const { elementIdentifier } = ElementType5ElementIdentifier.fromValue(elementIdentifierBits);
 
@@ -68,6 +71,12 @@ function parseType5Elements(data){
             case "LOCATION-INFORMATION-DESTINATION":
                 element = ElementType5LocationInformationDestination.fromValue(elementBits);
                 break;
+            case "LOCATION-MESSAGE-REFERENCE":
+                element = ElementType5LocationMessageReference.fromValue(elementBits);
+                break;
+            case "SDS-TYPE-1-VALUE":
+                element = ElementType5SDSType1Value.fromValue(elementBits);
+                break;
             case "EXTENDED-TYPE-5-ELEMENT":
                 // Handle extended type 5 elements here
                 throw new Error("Extended Type 5 Elements are not supported yet.");
@@ -78,7 +87,7 @@ function parseType5Elements(data){
         }
 
         var elementLengthBitsLength = 6
-        if (elementLengthBitsLength > 63) elementLengthBitsLength = 13;
+        if (elementLength > 63) elementLengthBitsLength = 13;
 
         data = data.slice(5 + elementLengthBitsLength + elementLength);
         if(element) {

@@ -42,7 +42,6 @@ class ElementHorizontalVelocity extends ElementScaffold {
         const encodedSpeedBits = binary.slice(index, index + 7); index += 7;
 
         const { velocityType } = ElementVelocityType.fromValue(parseInt(velocityTypeBits, 2));
-        console.log(velocityType)
 
         if (velocityType !== "HORIZONTAL-VELOCITY") {
             throw new Error('Invalid VelocityType for ElementHorizontalVelocity (must be HORIZONTAL-VELOCITY)');
