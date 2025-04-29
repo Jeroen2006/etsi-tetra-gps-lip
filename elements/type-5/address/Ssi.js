@@ -9,9 +9,9 @@ class ElementSSI extends ElementScaffold {
 
         super(1, 24); // 24 bits
 
+        this.addressOrIdentificationType = "SSI";
         this.ssi = ssi;
-        this.binary = ssi.toString(2).padStart(24, '0');
-        this.value = binaryToBigInt(this.binary);
+        this.value = ssi
     }
 
     static fromValue(value) {

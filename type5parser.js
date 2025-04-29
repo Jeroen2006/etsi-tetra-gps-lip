@@ -20,6 +20,8 @@ function parseType5Elements(data){
     const allZeros = bits.every(bit => bit === "0");
     if (allZeros) return elements;
 
+    console.log(data)
+
     while(data.length > 0){
         const elementIdentifierBits = data.slice(0, 5);
         const { elementIdentifier } = ElementType5ElementIdentifier.fromValue(elementIdentifierBits);
@@ -27,8 +29,14 @@ function parseType5Elements(data){
         const elementLengthBits = data.slice(5, 18);
         const { elementLength } = ElementType5ElementLength.fromValue(elementLengthBits);
 
-        var elementBits = data.slice(18, 18 + elementLength);
-        if (elementLengthBitsLength <= 63) elementBits = data.slice(11, 11 + elementLength);
+        var elementBits;
+        if (elementLength > 63) elementBits = data.slice(18, 18 + elementLength);
+        if (elementLength <= 63) elementBits = data.slice(11, 11 + elementLength);
+
+        if(elementBits.length < elementLength) {
+            console.error(`Element length mismatch: expected ${elementLength}, got ${elementBits.length}`);
+            break;
+        }
 
         var element;
         switch(elementIdentifier) {

@@ -18,15 +18,14 @@ class ElementType5LocationInformationDestination extends ElementScaffold {
         }
 
         this.elementIdentifier = new ElementType5ElementIdentifier("LOCATION-INFORMATION-DESTINATION");
-        this.elementLength = new ElementType5ElementLength(locationInformationDestination.length);
+        this.elementLength = new ElementType5ElementLength(locationInformationDestination.length + 4);
         this.locationInformationDestination = locationInformationDestination;
 
 
         const elementIdentifierBits = this.elementIdentifier.toBinary();
         const elementLengthBits = this.elementLength.toBinary();
-        const locationInformationDestinationBits = locationInformationDestination.toBinary();
+        const locationInformationDestinationBits = "0001" + locationInformationDestination.toBinary();
         var bitString = elementIdentifierBits + elementLengthBits + locationInformationDestinationBits;
-
         this.value = binaryToBigInt(bitString);
         this.length = bitString.length;
     }
@@ -40,6 +39,7 @@ class ElementType5LocationInformationDestination extends ElementScaffold {
         }
         var locationInformationDestination;
         const bits = value.slice(4);
+
         if(addressOrIdentificationType === "SSI") locationInformationDestination = Ssi.fromValue(bits);
         else if(addressOrIdentificationType === "SSI-MNI") locationInformationDestination = MniSsi.fromValue(bits);
         else if(addressOrIdentificationType === "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") locationInformationDestination = NoAddress.fromValue();

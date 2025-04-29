@@ -15,6 +15,7 @@ class ElementMniSsi extends ElementScaffold {
 
         super(1, 48); // 24 + 10 + 14 bits
 
+        this.addressOrIdentificationType = "SSI-MNI";
         this.ssi = ssi;
         this.countryCode = countryCode;
         this.networkCode = networkCode;

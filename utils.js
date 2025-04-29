@@ -13,15 +13,19 @@ function hexToBinaryString(hexString) {
 }
 
 function binaryToHex(bits) {
-    var hexString = '';
-    for (var i = 0; i < bits.length; i += 8) {
-        var hexDigit = parseInt(bits.substr(i, 8), 2).toString(16);
-        if (hexDigit.length < 2) hexDigit = '0' + hexDigit;
+    // var hexString = '';
+    // for (var i = 0; i < bits.length; i += 8) {
+    //     var hexDigit = parseInt(bits.substr(i, 8), 2).toString(16);
+    //     if (hexDigit.length < 2) hexDigit = '0' + hexDigit;
 
-        hexString += hexDigit;
-    }
+    //     hexString += hexDigit;
+    // }
   
-    return hexString.toUpperCase();
+    // return hexString.toUpperCase();
+
+    const bigInt = binaryToBigInt(bits);
+    const hexString = bigInt.toString(16).toUpperCase();
+    return hexString
 }
 
 function secondsToString(rawSeconds){

@@ -17,7 +17,6 @@ class ElementType5ElementLength extends ElementScaffold {
             var elementLengthExtension = elementLength / 8;
             bitString = "000000" + elementLengthExtension.toString(2).padStart(7, '0');
         }
-
         this.elementLength = elementLength;
         this.value = binaryToBigInt(bitString);
         this.bitLength = bitString.length;

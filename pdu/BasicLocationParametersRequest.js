@@ -53,7 +53,6 @@ class PduBasicLocationParametersRequest {
         const { reportType } = ElementReportType.fromValue(reportTypeValue);
 
         const type5Elements = parseType5Elements(binaryString.slice(17));
-        console.log(type5Elements);
 
         return new PduBasicLocationParametersRequest({
             requestResponse,
