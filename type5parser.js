@@ -1,9 +1,16 @@
 const ElementType5ElementIdentifier = require('./elements/type-5/Type5ElementIdentifier');
+const ElementType5ElementLength = require('./elements/type-5/Type5ElementLength');
 
-const ElementType5LocationMessageReference = require('./elements/type-5/Type5LocationMessageReference');
+const ElementType5MaximumInformationAge = require('./elements/type-5/Type5MaximumInformationAge');
+const ElementType5MaximumResponseTime = require('./elements/type-5/Type5MaximumResponseTime');
 const ElementType5ResultCode = require('./elements/type-5/Type5ResultCode');
+const ElementType5DefaultEnableDisableLifetime = require('./elements/type-5/Type5DefaultEnableDisableLifetime');
 const ElementType5RequestPriority = require('./elements/type-5/Type5RequestPriority');
+const ElementType5StartTime = require('./elements/type-5/Type5StartTime');
+const ElementType5StopTime = require('./elements/type-5/Type5StopTime');
+const ElementType5StatusValue = require('./elements/type-5/Type5StatusValue');
 const ElementType5TerminalOrLocationIdentification = require('./elements/type-5/Type5TerminalOrLocationIdentification');
+const ElementType5LocationInformationDestination = require('./elements/type-5/Type5LocationInformationDestination');
 
 function parseType5Elements(data){
     const elements = [];
@@ -12,36 +19,59 @@ function parseType5Elements(data){
         const elementIdentifierBits = data.slice(0, 5);
         const { elementIdentifier } = ElementType5ElementIdentifier.fromValue(elementIdentifierBits);
 
-        const elementLengthBits = data.slice(5, 11);
-        const elementLength = parseInt(elementLengthBits, 2);
+        const elementLengthBits = data.slice(5, 18);
+        const { elementLength } = ElementType5ElementLength.fromValue(elementLengthBits);
 
-        //LENGTH EXTENSION NOT SUPPORTED (YET)
-        
-        if(elementIdentifier === "LOCATION-MESSAGE-REFERENCE"){
-            const referenceBits = data.slice(0, 5 + 6 + elementLength);
-            const element = ElementType5LocationMessageReference.fromValue(referenceBits);
-            data = data.slice(5 + 6 + elementLength);
+        var elementBits = data.slice(18, 18 + elementLength);
+        if (elementLengthBitsLength <= 63) elementBits = data.slice(11, 11 + elementLength);
 
-            console.log(referenceBits, element.toBinary())
+        var element;
+        switch(elementIdentifier) {
+            case "MAXIMUM-INFORMATION-AGE":
+                element = ElementType5MaximumInformationAge.fromValue(elementBits);
+                break;
+            case "MAXIMUM-RESPONSE-TIME":
+                element = ElementType5MaximumResponseTime.fromValue(elementBits);
+                break;
+            case "RESULT-CODE":
+                element = ElementType5ResultCode.fromValue(elementBits);
+                break;
+            case "DEFAULT-ENABLE-DISABLE-LIFETIME":
+                element = ElementType5DefaultEnableDisableLifetime.fromValue(elementBits);
+                break;
+            case "REQUEST-PRIORITY":
+                element = ElementType5RequestPriority.fromValue(elementBits);
+                break;
+            case "START-TIME":
+                element = ElementType5StartTime.fromValue(elementBits);
+                break;
+            case "STOP-TIME":
+                element = ElementType5StopTime.fromValue(elementBits);
+                break;
+            case "STATUS-VALUE":
+                element = ElementType5StatusValue.fromValue(elementBits);
+                break;
+            case "TERMINAL-OR-LOCATION-IDENTIFICATION":
+                element = ElementType5TerminalOrLocationIdentification.fromValue(elementBits);
+                break;
+            case "LOCATION-INFORMATION-DESTINATION":
+                element = ElementType5LocationInformationDestination.fromValue(elementBits);
+                break;
+            case "EXTENDED-TYPE-5-ELEMENT":
+                // Handle extended type 5 elements here
+                throw new Error("Extended Type 5 Elements are not supported yet.");
+            default:
+                element = undefined;
+                console.error(`Unsupported element identifier: ${elementIdentifier}`);
+                break;
+        }
 
+        var elementLengthBitsLength = 6
+        if (elementLengthBitsLength > 63) elementLengthBitsLength = 13;
+
+        data = data.slice(5 + elementLengthBitsLength + elementLength);
+        if(element) {
             elements.push(element);
-        } else if(elementIdentifier === "RESULT-CODE"){
-            const resultCodeBits = data.slice(0, 5 + 6 + elementLength);
-            const element = ElementType5ResultCode.fromValue(resultCodeBits);
-            data = data.slice(5 + 6 + elementLength);
-            elements.push(element);
-        } else if(elementIdentifier === "REQUEST-PRIORITY"){
-            const requestPriorityBits = data.slice(0, 5 + 6 + elementLength);
-            const element = ElementType5RequestPriority.fromValue(requestPriorityBits);
-            data = data.slice(5 + 6 + elementLength);
-            elements.push(element);
-        } else if(elementIdentifier === "TERMINAL-OR-LOCATION-IDENTIFICATION"){
-            const terminalOrLocationIdentificationBits = data.slice(0, 5 + 6 + elementLength);
-            const element = ElementType5TerminalOrLocationIdentification.fromValue(terminalOrLocationIdentificationBits);
-            data = data.slice(5 + 6 + elementLength);
-            elements.push(element);
-        } else {
-            throw new Error(`Unsupported element identifier: ${elementIdentifier}`);
         }
     }
 

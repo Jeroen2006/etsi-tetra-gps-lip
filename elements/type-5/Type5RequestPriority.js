@@ -1,9 +1,10 @@
 const ElementScaffold = require('../scaffold');
 const ElementType5ElementIdentifier = require('./Type5ElementIdentifier');
-const { binaryToBigInt } = require("../../utils");
+const ElementType5ElementLength = require('./Type5ElementLength');
 
-// Lookup table with clean names
-const requestPriorityDef = {
+const { binaryToBigInt } = require('../../utils');
+
+const def = {
     0: 'LOW',
     1: 'NORMAL',
     2: 'HIGH',
@@ -11,66 +12,37 @@ const requestPriorityDef = {
 };
 
 class ElementType5RequestPriority extends ElementScaffold {
-    constructor(priority) {
-        const elementIdentifier = new ElementType5ElementIdentifier("REQUEST-PRIORITY");
+    constructor(requestPriority) {
+        super(1, 2); 
 
-        if (typeof priority !== 'number' || !(priority in requestPriorityDef)) {
-            throw new Error('Invalid Request Priority. Must be 0 (LOW), 1 (NORMAL), 2 (HIGH), or 3 (HIGHEST).');
-        }
+        if(!Object.values(def).includes(requestPriority)) throw new Error('Invalid Default Request Priority value. Must be one of: LOW, NORMAL, HIGH, HIGHEST');
+        this.requestPriorityValue = parseInt(Object.keys(def).find(key => def[key] === requestPriority))
 
-        super(1, 13); // 5 bits ID + 6 bits length + 2 bits payload
+        this.elementIdentifier = new ElementType5ElementIdentifier("REQUEST-PRIORITY");
+        this.elementLength = new ElementType5ElementLength(2);
+        this.requestPriority = requestPriority;
+        
 
-        this.elementIdentifier = elementIdentifier;
-        this.priority = priority;
-        this.name = requestPriorityDef[priority];
-        this.length = 13; // 5 bits (Type5) + 6 bits (Length) + 2 bits (Payload) = 13 bits
+        const elementIdentifierBits = this.elementIdentifier.toBinary();
+        const elementLengthBits = this.elementLength.toBinary();
+        const requestPriorityBits = this.requestPriorityValue.toString(2).padStart(2, '0');
+        var bitString = elementIdentifierBits + elementLengthBits + requestPriorityBits;
 
-        const elementIdentifierBinary = this.elementIdentifier.value.toString(2).padStart(5, '0');
-        const elementLengthBinary = (this.length - 11).toString(2).padStart(6, '0');
-        const priorityBinary = priority.toString(2).padStart(2, '0');
-
-        this.binary = elementIdentifierBinary + elementLengthBinary + priorityBinary;
-        this.value = binaryToBigInt(this.binary);
+        this.value = binaryToBigInt(bitString);
+        this.length = bitString.length;
     }
 
     static fromValue(value) {
-        if (typeof value === 'string') value = binaryToBigInt(value);
+        if (value.length !== 2) throw new Error('Invalid length for request priority value');
 
-        const binary = value.toString(2).padStart(13, '0');
+        const requestPriorityBits = value.slice(0, 2);
+        const requestPriority = binaryToBigInt(requestPriorityBits);
 
-        let index = 0;
-
-        const elementIdentifierBits = binary.slice(index, index + 5); index += 5;
-        const elementLengthBits = binary.slice(index, index + 6); index += 6;
-        const priorityBits = binary.slice(index, index + 2); index += 2;
-
-        const identifier = ElementType5ElementIdentifier.fromValue(parseInt(elementIdentifierBits, 2));
-
-        if (identifier.identifierName !== "REQUEST-PRIORITY") {
-            throw new Error('Invalid Type 5 Element Identifier (must be REQUEST-PRIORITY)');
-        }
-
-        const elementLength = parseInt(elementLengthBits, 2);
-        if (elementLength !== 2) {
-            throw new Error(`Invalid element length for REQUEST-PRIORITY (expected 2, got ${elementLength})`);
-        }
-
-        const priority = parseInt(priorityBits, 2);
-
-        return new ElementType5RequestPriority(priority);
+        return new ElementType5RequestPriority(def[requestPriority]);
     }
 
-    static isValid(value) {
-        try {
-            this.fromValue(value);
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    static get def() {
-        return requestPriorityDef;
+    static getDefinition() {
+        return def;
     }
 }
 

@@ -9,23 +9,23 @@ const MniSsi = require('./address/MniSsi');
 
 const { binaryToBigInt } = require('../../utils');
 
-class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
-    constructor(terminalOrLocationIdentification) {
+class ElementType5LocationInformationDestination extends ElementScaffold {
+    constructor(locationInformationDestination) {
         super(1, 4); 
 
-        if (!(terminalOrLocationIdentification instanceof Ssi || terminalOrLocationIdentification instanceof MniSsi || terminalOrLocationIdentification instanceof NoAddress)) {
+        if (!(locationInformationDestination instanceof Ssi || locationInformationDestination instanceof MniSsi || locationInformationDestination instanceof NoAddress)) {
             throw new Error('Invalid terminal or location identification value. Must be an instance of Ssi or MniSsi');
         }
 
-        this.elementIdentifier = new ElementType5ElementIdentifier("TERMINAL-OR-LOCATION-IDENTIFICATION");
-        this.elementLength = new ElementType5ElementLength(terminalOrLocationIdentification.length);
-        this.terminalOrLocationIdentification = terminalOrLocationIdentification;
+        this.elementIdentifier = new ElementType5ElementIdentifier("LOCATION-INFORMATION-DESTINATION");
+        this.elementLength = new ElementType5ElementLength(locationInformationDestination.length);
+        this.locationInformationDestination = locationInformationDestination;
 
 
         const elementIdentifierBits = this.elementIdentifier.toBinary();
         const elementLengthBits = this.elementLength.toBinary();
-        const terminalOrLocationIdentificationBits = terminalOrLocationIdentification.toBinary();
-        var bitString = elementIdentifierBits + elementLengthBits + terminalOrLocationIdentificationBits;
+        const locationInformationDestinationBits = locationInformationDestination.toBinary();
+        var bitString = elementIdentifierBits + elementLengthBits + locationInformationDestinationBits;
 
         this.value = binaryToBigInt(bitString);
         this.length = bitString.length;
@@ -38,15 +38,14 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
         if(addressOrIdentificationType !== "SSI" && addressOrIdentificationType !== "SSI-MNI" && addressOrIdentificationType !== "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") {
             throw new Error('Invalid/unsupported address or identification type value.');
         }
-
-        var terminalOrLocationIdentification;
+        var locationInformationDestination;
         const bits = value.slice(4);
-        if(addressOrIdentificationType === "SSI") terminalOrLocationIdentification = Ssi.fromValue(bits);
-        else if(addressOrIdentificationType === "SSI-MNI") terminalOrLocationIdentification = MniSsi.fromValue(bits);
-        else if(addressOrIdentificationType === "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") terminalOrLocationIdentification = NoAddress.fromValue();
+        if(addressOrIdentificationType === "SSI") locationInformationDestination = Ssi.fromValue(bits);
+        else if(addressOrIdentificationType === "SSI-MNI") locationInformationDestination = MniSsi.fromValue(bits);
+        else if(addressOrIdentificationType === "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") locationInformationDestination = NoAddress.fromValue();
 
-        return new ElementType5TerminalOrLocationIdentification(terminalOrLocationIdentification);
+        return new ElementType5LocationInformationDestination(locationInformationDestination);
     }
 }
 
-module.exports = ElementType5TerminalOrLocationIdentification;
+module.exports = ElementType5LocationInformationDestination;

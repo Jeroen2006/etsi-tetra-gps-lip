@@ -1,8 +1,6 @@
-const ElementScaffold = require('../scaffold');
-const ElementType5ElementIdentifier = require('./Type5ElementIdentifier');
-const ElementType5ElementLength = require('./Type5ElementLength');
+const ElementScaffold = require('./scaffold');
 
-const { binaryToBigInt } = require('../../utils');
+const { binaryToBigInt } = require('../utils');
 
 const def = {
     0: 'Success',
@@ -40,22 +38,17 @@ const def = {
     255: 'Reserved'
 };
 
-class ElementType5ResultCode extends ElementScaffold {
+class ElementResultCode extends ElementScaffold {
     constructor(resultCode) {
         super(1, 8); 
 
         if(!Object.values(def).includes(resultCode)) throw new Error('Invalid Result Code value');
         this.resultCodeValue = parseInt(Object.keys(def).find(key => def[key] === resultCode))
 
-        this.elementIdentifier = new ElementType5ElementIdentifier('RESULT-CODE');
-        this.elementLength = new ElementType5ElementLength(8);
         this.resultCode = resultCode;
         
-
-        const elementIdentifierBits = this.elementIdentifier.toBinary();
-        const elementLengthBits = this.elementLength.toBinary();
         const resultCodeBits = this.resultCodeValue.toString(2).padStart(8, '0');
-        var bitString = elementIdentifierBits + elementLengthBits + resultCodeBits;
+        var bitString = resultCodeBits;
 
         this.value = binaryToBigInt(bitString);
         this.length = bitString.length;
@@ -67,7 +60,7 @@ class ElementType5ResultCode extends ElementScaffold {
         const resultCodeBits = value.slice(0, 8);
         const resultCode = binaryToBigInt(resultCodeBits);
 
-        return new ElementType5ResultCode(def[resultCode]);
+        return new ElementResultCode(def[resultCode]);
     }
 
     static getDefinition() {
@@ -75,4 +68,4 @@ class ElementType5ResultCode extends ElementScaffold {
     }
 }
 
-module.exports = ElementType5ResultCode;
+module.exports = ElementResultCode;

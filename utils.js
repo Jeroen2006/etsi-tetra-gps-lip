@@ -22,7 +22,24 @@ function binaryToHex(bits) {
     }
   
     return hexString.toUpperCase();
-  }
+}
+
+function secondsToString(rawSeconds){
+    if(rawSeconds < 60){
+        return `${rawSeconds}s`;
+    } 
+
+    const seconds = rawSeconds % 60;
+    const minutes = Math.floor(rawSeconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    const formattedSeconds = seconds > 0 ? `${seconds}s` : '';
+    const formattedMinutes = minutes > 0 ? `${minutes % 60}m` : '';
+    const formattedHours = hours > 0 ? `${hours % 24}h` : '';
+    const formattedDays = days > 0 ? `${days}d` : '';
+    return `${formattedDays}${formattedHours}${formattedMinutes}${formattedSeconds}`.trim();
+}
 
 
 function binaryToBigInt(binaryString) {
@@ -35,5 +52,6 @@ function binaryToBigInt(binaryString) {
 module.exports = {
     hexToBinaryString,
     binaryToHex,
-    binaryToBigInt
+    binaryToBigInt,
+    secondsToString
 };
