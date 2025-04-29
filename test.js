@@ -5,11 +5,11 @@
 // const shortReport = PduShortLocationReport.fromData("0123006AD00F6886E000")
 // console.log(shortReport.toData())
 
-const PduLongLocationReport = require("./pdu/LongLocationReport");
-const testdata = "4EEA7B6900BDF8C93E9DC1DA0200";
-const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
-console.log(longReport.toData(), testdata.split(" ").join(""))
-console.log(longReport)
+// const PduLongLocationReport = require("./pdu/LongLocationReport");
+// const testdata = "4EEA7B6900BDF8C93E9DC1DA0200";
+// const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
+// console.log(longReport.toData(), testdata.split(" ").join(""))
+// console.log(longReport)
 
 
 // const PduLocationReportAcknowledgement = require("./pdu/LocationReportAcknowledgement");
