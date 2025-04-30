@@ -9,11 +9,12 @@ const ElementMinimumDetectionInterval = require('./triggers/MinimumDetectionInte
 const ElementTriggerLocationPoint = require('./triggers/LocationPoint');
 const ElementTriggerLocationCircle = require('./triggers/LocationCircle');
 const ElementTriggerStatusValue = require('./triggers/StatusValue');
+const ElementTriggerSDSType1Value = require('./triggers/SDSType1Value');
 
 const { binaryToBigInt } = require('../../utils');
 
 class ElementType5TriggerDefinition extends ElementScaffold {
-    constructor(triggerType, isRecurring, { maximumReportingInterval, maximumReportingDistance, minimumDetectionInterval, locationPoint, locationCircle, statusValue }) {
+    constructor(triggerType, isRecurring, { maximumReportingInterval, maximumReportingDistance, minimumDetectionInterval, locationPoint, locationCircle, statusValue, sdsType1Value }) {
         super(5, 0); // Type 5, Trigger Definition
         this.elementIdentifier = new ElementType5ElementIdentifier("TRIGGER-DEFINITION");
         this.elementLength = new ElementType5ElementLength(0); // Placeholder, will be updated later
@@ -29,6 +30,7 @@ class ElementType5TriggerDefinition extends ElementScaffold {
         if(triggerType == "APPROACHING-POINT" && !locationCircle) throw new Error('Location Circle is required for this trigger type.');
         if(triggerType == "LEAVING-POINT" && !locationCircle) throw new Error('Location Circle is required for this trigger type.');
         if(triggerType == "STATUS" && !statusValue) throw new Error('Status Value is required for this trigger type.');
+        if(triggerType == "SDS-TYPE-1" && !sdsType1Value) throw new Error('SDS Type 1 Value is required for this trigger type.');
         
         if(maximumReportingInterval && !(maximumReportingInterval instanceof ElementMaximumReportingInterval)) throw new Error('Invalid Maximum Reporting Interval object.');
         if(maximumReportingDistance && !(maximumReportingDistance instanceof ElementMaximumReportingDistance)) throw new Error('Invalid Maximum Reporting Distance object.');
@@ -36,6 +38,7 @@ class ElementType5TriggerDefinition extends ElementScaffold {
         if(locationPoint && !(locationPoint instanceof ElementTriggerLocationPoint)) throw new Error('Invalid Location Point object.');
         if(locationCircle && !(locationCircle instanceof ElementTriggerLocationCircle)) throw new Error('Invalid Location Circle object.');
         if(statusValue && !(statusValue instanceof ElementTriggerStatusValue)) throw new Error('Invalid Status Value object.');
+        if(sdsType1Value && !(sdsType1Value instanceof ElementTriggerSDSType1Value)) throw new Error('Invalid SDS Type 1 Value object.');
 
         if(maximumReportingInterval) this.maximumReportingInterval = maximumReportingInterval;
         if(maximumReportingDistance) this.maximumReportingDistance = maximumReportingDistance;
@@ -43,6 +46,7 @@ class ElementType5TriggerDefinition extends ElementScaffold {
         if(locationPoint) this.locationPoint = locationPoint;
         if(locationCircle) this.locationCircle = locationCircle;
         if(statusValue) this.statusValue = statusValue;
+        if(sdsType1Value) this.sdsType1Value = sdsType1Value;
 
         var triggerInfoBits = this.triggerType.toBinary();
         triggerInfoBits += this.oneshotRecurring; // 1 bit for recurring/oneshot
@@ -53,6 +57,7 @@ class ElementType5TriggerDefinition extends ElementScaffold {
         if(triggerType == "ARRIVED-AT-POINT") triggerInfoBits += this.locationPoint.toBinary();
         if(triggerType == "APPROACHING-POINT" || triggerType == "LEAVING-POINT") triggerInfoBits += this.locationCircle.toBinary();
         if(triggerType == "STATUS") triggerInfoBits += this.statusValue.toBinary();
+        if(triggerType == "SDS-TYPE-1") triggerInfoBits += this.sdsType1Value.toBinary();
 
         this.elementLength = new ElementType5ElementLength(triggerInfoBits.length); // Update the element length based on the actual length of the trigger info bits
 
@@ -74,6 +79,7 @@ class ElementType5TriggerDefinition extends ElementScaffold {
         var locationPoint;
         var locationCircle;
         var statusValue;
+        var sdsType1Value
         
         if(triggerType == "MAXIMUM-REPORTING-INTERVAL"){
             const MaximumReportingIntervalBits = value.slice(9, 16);
@@ -105,7 +111,12 @@ class ElementType5TriggerDefinition extends ElementScaffold {
             statusValue = ElementTriggerStatusValue.fromValue(TriggerStatusValueBits);
         }
 
-        return new ElementType5TriggerDefinition(triggerType, isRecurring, { maximumReportingInterval, maximumReportingDistance, minimumDetectionInterval, locationPoint, locationCircle, statusValue });
+        if(triggerType == "SDS-TYPE-1"){
+            const TriggerSDSType1ValueBits = value.slice(9, 25);
+            sdsType1Value = ElementTriggerSDSType1Value.fromValue(TriggerSDSType1ValueBits);
+        }
+
+        return new ElementType5TriggerDefinition(triggerType, isRecurring, { maximumReportingInterval, maximumReportingDistance, minimumDetectionInterval, locationPoint, locationCircle, statusValue, sdsType1Value });
 
     }
 

@@ -6,6 +6,9 @@ const ElementAddressOrIdentificationType = require('./address/AddressOrIdentific
 const NoAddress = require('./address/NoAddress');
 const Ssi = require('./address/Ssi');
 const MniSsi = require('./address/MniSsi');
+const Esn = require('./address/Esn');
+const MniSsiEsn = require('./address/MniSsiEsn');
+const SsiEsn = require('./address/SsiEsn');
 
 const { binaryToBigInt } = require('../../utils');
 
@@ -13,8 +16,8 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
     constructor(terminalOrLocationIdentification) {
         super(1, 4); 
 
-        if (!(terminalOrLocationIdentification instanceof Ssi || terminalOrLocationIdentification instanceof MniSsi || terminalOrLocationIdentification instanceof NoAddress)) {
-            throw new Error('Invalid terminal or location identification value. Must be an instance of Ssi or MniSsi');
+        if (!(terminalOrLocationIdentification instanceof Ssi || terminalOrLocationIdentification instanceof MniSsi || terminalOrLocationIdentification instanceof NoAddress || terminalOrLocationIdentification instanceof Esn || terminalOrLocationIdentification instanceof MniSsiEsn || terminalOrLocationIdentification instanceof SsiEsn)) {
+            throw new Error('Invalid terminal or location identification value. Must be an instance of Ssi, MniSsi, Esn, MniSsiEsn, SsiEsn or NoAddress');
         }
 
         this.elementIdentifier = new ElementType5ElementIdentifier("TERMINAL-OR-LOCATION-IDENTIFICATION");
@@ -35,7 +38,8 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
         const addressOrIdentificationTypeBits = value.slice(0, 4);
         const { addressOrIdentificationType } = ElementAddressOrIdentificationType.fromValue(addressOrIdentificationTypeBits);
 
-        if(addressOrIdentificationType !== "SSI" && addressOrIdentificationType !== "SSI-MNI" && addressOrIdentificationType !== "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") {
+        const supportedAddressOrIdentificationTypes = ["SSI", "SSI-MNI", "EXTERNAL-SUBSCRIBER-NUMBER", "SSI-EXTERNAL-SUBSCRIBER-NUMBER", "SSI-MNI-EXTERNAL-SUBSCRIBER-NUMBER", "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE"];
+        if(!supportedAddressOrIdentificationTypes.includes(addressOrIdentificationType)) {
             throw new Error('Invalid/unsupported address or identification type value.');
         }
 
@@ -43,6 +47,9 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
         const bits = value.slice(4);
         if(addressOrIdentificationType === "SSI") terminalOrLocationIdentification = Ssi.fromValue(bits);
         else if(addressOrIdentificationType === "SSI-MNI") terminalOrLocationIdentification = MniSsi.fromValue(bits);
+        else if(addressOrIdentificationType === "EXTERNAL-SUBSCRIBER-NUMBER") terminalOrLocationIdentification = Esn.fromValue(bits);
+        else if(addressOrIdentificationType === "SSI-EXTERNAL-SUBSCRIBER-NUMBER") terminalOrLocationIdentification = SsiEsn.fromValue(bits);
+        else if(addressOrIdentificationType === "SSI-MNI-EXTERNAL-SUBSCRIBER-NUMBER") terminalOrLocationIdentification = MniSsiEsn.fromValue(bits);
         else if(addressOrIdentificationType === "NO-TERMINAL-OR-LOCATION-IDENTIFICATION-AVAILABLE") terminalOrLocationIdentification = NoAddress.fromValue();
 
         return new ElementType5TerminalOrLocationIdentification(terminalOrLocationIdentification);

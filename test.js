@@ -20,21 +20,21 @@ const { ElementType5LocationInformationDestination, ElementSSI } = require("./ex
 // const ElementMinimumDetectionInterval = require("./elements/type-5/triggers/MinimumDetectionInterval");
 
 
-const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
-const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
-const addModifyTriggerRequest = PduAddModifyTriggerRequest.fromData(testdata.split(" ").join(""));
-//console.log(addModifyTriggerRequest)
-console.log(addModifyTriggerRequest.toData(), testdata.split(" ").join(""))
+// const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
+// const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
+// const addModifyTriggerRequest = PduAddModifyTriggerRequest.fromData(testdata.split(" ").join(""));
+// //console.log(addModifyTriggerRequest)
+// console.log(addModifyTriggerRequest.toData(), testdata.split(" ").join(""))
 
 // const PduShortLocationReport = require("./pdu/ShortLocationReport");
 // const shortReport = PduShortLocationReport.fromData("002F7DC24FA7B103E810")
 // console.log(shortReport, shortReport.toData())
 
-// const PduLongLocationReport = require("./pdu/LongLocationReport");
-// const testdata = "4E 7B 71 32 04 8C 01 AB 40 3D A4 9C 00 25 AC 7D 2A 51 80 08 00 C4 14 30 80 08 B8 20 1E 4A 20 ";
-// const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
-// console.log(longReport.toData(), testdata.split(" ").join(""))
-//console.log(longReport)
+const PduLongLocationReport = require("./pdu/LongLocationReport");
+const testdata = "4E 7B 71 32 04 8C 01 AB 40 3D A4 9C 00 25 AC 08 02 20 05 A0 0F 25 13 A8 04 9C BA 12 34 56 78 90 ";
+const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
+console.log(longReport.toData(), testdata.split(" ").join(""))
+console.log(longReport.type5Elements)
 
 // const PduLocationReportAcknowledgement = require("./pdu/LocationReportAcknowledgement");
 // const testdata = "50 00";

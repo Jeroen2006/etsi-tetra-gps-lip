@@ -11,7 +11,7 @@ class ElementType5SDSType1Value extends ElementScaffold {
         //check if sdsType1Value is a valid status value (0-65536)
         if(sdsType1Value > 65535 || sdsType1Value < 0) throw new Error('Invalid Result Code value. Must be between 0 and 65535');
 
-        this.elementIdentifier = new ElementType5ElementIdentifier('STATUS-VALUE');
+        this.elementIdentifier = new ElementType5ElementIdentifier("SDS-TYPE-1-VALUE");
         this.elementLength = new ElementType5ElementLength(16);
         this.sdsType1Value = sdsType1Value;
 

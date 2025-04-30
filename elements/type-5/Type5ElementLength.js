@@ -32,7 +32,7 @@ class ElementType5ElementLength extends ElementScaffold {
 
         if(elementLengthBits == "000000"){
             const elementLengthExtensionBits = bitString.slice(6, 13);
-            elementLength = parseInt(elementLengthExtensionBits, 2) * 8;
+            elementLength = (parseInt(elementLengthExtensionBits, 2) * 8) + 64;
         } else {
             elementLength = parseInt(elementLengthBits, 2);
         }
