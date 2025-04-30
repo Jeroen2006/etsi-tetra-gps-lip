@@ -25,7 +25,6 @@ class ElementType5TerminalOrLocationIdentification extends ElementScaffold {
         this.terminalOrLocationIdentification = terminalOrLocationIdentification;
         this.addressOrIdentificationType = new ElementAddressOrIdentificationType(terminalOrLocationIdentification.addressOrIdentificationType);
 
-
         const elementIdentifierBits = this.elementIdentifier.toBinary();
         const elementLengthBits = this.elementLength.toBinary();
         const terminalOrLocationIdentificationBits = this.addressOrIdentificationType.toBinary() + terminalOrLocationIdentification.toBinary();

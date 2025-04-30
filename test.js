@@ -43,11 +43,23 @@ const { convertToDataElements } = require("./utils");
 // console.log(locationReportingEnableDisableRequest)
 // console.log(locationReportingEnableDisableRequest.toData(), testdata.split(" ").join(""))
 
-const PduLocationReportingEnableDisableResponse = require("./pdu/LocationReportingEnableDisableResponse");
-const testdata = "6B 01 1D 08 03 C9 44 EA 01 24 ";
-const locationReportingEnableDisableResponse = PduLocationReportingEnableDisableResponse.fromData(testdata.split(" ").join(""));
-console.log(locationReportingEnableDisableResponse)
-console.log(locationReportingEnableDisableResponse.toData(), testdata.split(" ").join(""))
+// const PduLocationReportingEnableDisableResponse = require("./pdu/LocationReportingEnableDisableResponse");
+// const testdata = "6B 01 1D 08 03 C9 44 EA 01 24 ";
+// const locationReportingEnableDisableResponse = PduLocationReportingEnableDisableResponse.fromData(testdata.split(" ").join(""));
+// console.log(locationReportingEnableDisableResponse)
+// console.log(locationReportingEnableDisableResponse.toData(), testdata.split(" ").join(""))
+
+// const PduReportTriggersRequest = require("./pdu/ReportTriggersRequest");
+// const testdata = "61 1D 08 03 C9 44 EA 01 24 ";
+// const reportTriggersRequest = PduReportTriggersRequest.fromData(testdata.split(" ").join(""));
+// console.log(reportTriggersRequest)
+// console.log(reportTriggersRequest.toData(), testdata.split(" ").join(""))
+
+const PduReportTriggersResponse = require("./pdu/ReportTriggersResponse");
+const testdata = "62 01 01 45 C1 00 27 0F 9F 42 21 23 00 6A D0 0F 68 ";
+const reportTriggersResponse = PduReportTriggersResponse.fromData(testdata.split(" ").join(""));
+console.log(convertToDataElements(reportTriggersResponse))
+console.log(reportTriggersResponse.toData(), testdata.split(" ").join(""))
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
