@@ -72,7 +72,7 @@ function encodeAltitude(type, altitude) {
 
 function decodeAltitude(raw) {
     if (raw === 0) {
-        throw new Error('Altitude value reserved.');
+        return -200 
     } else if (raw >= 1 && raw <= 1200) {
         return raw - 201;
     } else if (raw >= 1201 && raw <= 1926) {

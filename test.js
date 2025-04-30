@@ -84,7 +84,7 @@
 // console.log(shortReport, shortReport.toData())
 
 const PduLongLocationReport = require("./pdu/LongLocationReport");
-const testdata = "4EF479D140BDF7493E9EC286F502164080";
+const testdata = "4C5000000000000000017F80000C2144";
 const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
 console.log(longReport.toData(), testdata.split(" ").join(""))
 console.log(longReport)
@@ -116,34 +116,28 @@ console.log(longReport)
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const ElementType5TriggerDefinition = require("./elements/type-5/Type5TriggerDefinition");
 // const ElementMaximumReportingInterval = require("./elements/type-5/triggers/MaximumReportingInterval");
-// const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require("./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy");
-// const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require("./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy");
-// const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require("./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy");
 
 // const maxReportingInterval = new ElementMaximumReportingInterval("30s");
 // const maxIntervalTriggerDefinition = new ElementType5TriggerDefinition("MAXIMUM-REPORTING-INTERVAL", true, { maximumReportingInterval: maxReportingInterval });
-// const directionOfTravelAndDirectionOfTravelAccuracy = new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
-//     returnValue: "DIRECTION-OF-TRAVEL-AND-UNCERTAINTY-REQUIRED",
-//     requestedRequired: "REQUIRED",
-//     directionOfTravelAccuracyRequired: "BEST-EFFORT"
-// });
-
-// const horizontalVelocityAndHorizontalVelocityAccuracy = new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
-//     returnValue: "HORIZONTAL-VELOCITY-AND-UNCERTAINTY-REQUIRED",
-//     requestedRequired: "REQUIRED",
-//     horizontalVelocityAccuracyRequired: "<6KM/U"
-// });
-
-// const locationAltitudeAndLocationAltitudeAccuracy = new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
-//     returnValue: "LOCATION-ALTITUDE-AND-UNCERTAINTY-REQUIRED",
-//     requestedRequired: "REQUIRED",
-//     locationAltitudeAccuracyRequired: "BEST-EFFORT",
-// });
 
 // const addModifyTriggerRequest = new PduAddModifyTriggerRequest({
 //     acknowledgementRequest: true,
 //     reportType: "LONG-WITH-TIME-OF-POSITION",
-//     type5Elements: [directionOfTravelAndDirectionOfTravelAccuracy, horizontalVelocityAndHorizontalVelocityAccuracy, locationAltitudeAndLocationAltitudeAccuracy, maxIntervalTriggerDefinition]
+//     type5Elements: [maxIntervalTriggerDefinition]
 // });
 
 // console.log(addModifyTriggerRequest.toData());
+
+
+// const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
+// const ElementType5MaximumResponseTime = require("./elements/type-5/Type5MaximumResponseTime");
+
+// const maxResponseTime = new ElementType5MaximumResponseTime("4s");
+// const immediateLocationReportRequest = new PduImmediateLocationReportRequest({
+//     reportType: "LONG-WITH-TIME-OF-POSITION",
+//     type5Elements: [maxResponseTime]
+// });
+
+// console.log(immediateLocationReportRequest.toData());
+
+//4C5000000000000000017F80000C2144 //long report yes need fix thnaks
