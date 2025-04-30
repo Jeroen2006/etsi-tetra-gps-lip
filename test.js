@@ -55,11 +55,23 @@ const { convertToDataElements } = require("./utils");
 // console.log(reportTriggersRequest)
 // console.log(reportTriggersRequest.toData(), testdata.split(" ").join(""))
 
-const PduReportTriggersResponse = require("./pdu/ReportTriggersResponse");
-const testdata = "62 01 01 45 C1 00 27 0F 9F 42 21 23 00 6A D0 0F 68 ";
-const reportTriggersResponse = PduReportTriggersResponse.fromData(testdata.split(" ").join(""));
-console.log(convertToDataElements(reportTriggersResponse))
-console.log(reportTriggersResponse.toData(), testdata.split(" ").join(""))
+// const PduReportTriggersResponse = require("./pdu/ReportTriggersResponse");
+// const testdata = "62 01 01 45 C1 00 27 0F 9F 42 21 23 00 6A D0 0F 68 ";
+// const reportTriggersResponse = PduReportTriggersResponse.fromData(testdata.split(" ").join(""));
+// console.log(convertToDataElements(reportTriggersResponse))
+// console.log(reportTriggersResponse.toData(), testdata.split(" ").join(""))
+
+// const PduReportBasicLocationParametersRequest = require("./pdu/ReportBasicLocationParametersRequest");
+// const testdata = "65 1D 08 03 C9 44 EA 01 24 ";
+// const reportBasicLocationParametersRequest = PduReportBasicLocationParametersRequest.fromData(testdata.split(" ").join(""));
+// console.log(reportBasicLocationParametersRequest)
+// console.log(reportBasicLocationParametersRequest.toData(), testdata.split(" ").join(""))
+
+const PduReportBasicLocationParametersResponse = require("./pdu/ReportBasicLocationParametersResponse");
+const testdata = "66 01 00 00 38 F2 50 38 20 ";
+const reportBasicLocationParametersResponse = PduReportBasicLocationParametersResponse.fromData(testdata.split(" ").join(""));
+console.log(convertToDataElements(reportBasicLocationParametersResponse))
+console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").join(""))
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
