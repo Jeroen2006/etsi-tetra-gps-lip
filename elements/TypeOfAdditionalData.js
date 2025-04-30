@@ -6,14 +6,14 @@ const def = {
 };
 
 class ElementTypeOfAdditionalData extends ElementScaffold {
-    constructor(TypeOfAdditionalData) {
+    constructor(typeOfAdditionalData) {
         super(1, 1); // 1-bit field
 
         if (TypeOfAdditionalData in def) {
-            this.TypeOfAdditionalData = TypeOfAdditionalData;
-            this.value = def[TypeOfAdditionalData];
+            this.typeOfAdditionalData = typeOfAdditionalData;
+            this.value = def[typeOfAdditionalData];
         } else {
-            throw new Error(`Invalid additional data type: ${TypeOfAdditionalData}`);
+            throw new Error(`Invalid additional data type: ${typeOfAdditionalData}`);
         }
     }
 
