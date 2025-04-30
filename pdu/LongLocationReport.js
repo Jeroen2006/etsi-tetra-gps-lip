@@ -229,7 +229,7 @@ class PduLongLocationReport {
 
         const typeOfAdditionalDataValue = binaryString.slice(bitCounter, bitCounter + 1);
         const { TypeOfAdditionalData } = ElementTypeOfAdditionalData.fromValue(typeOfAdditionalDataValue);
-        if(TypeOfAdditionalData != "REASON-FOR-SENDING") throw new Error("Invalid TypeOfAdditionalData. Must be REASON-FOR-SENDING.");
+        //if(TypeOfAdditionalData != "REASON-FOR-SENDING") throw new Error("Invalid TypeOfAdditionalData. Must be REASON-FOR-SENDING.");
         bitCounter += 1;
 
         const reasonForSendingValue = binaryString.slice(bitCounter, bitCounter + 8);

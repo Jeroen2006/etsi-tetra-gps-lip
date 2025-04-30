@@ -1,5 +1,5 @@
-const { ElementType5LocationInformationDestination, ElementSSI } = require("./exports");
-const { convertToDataElements } = require("./utils");
+// const { ElementType5LocationInformationDestination, ElementSSI } = require("./exports");
+// const { convertToDataElements } = require("./utils");
 // ->>>>>> http://pdu.argos.ws/LIP_PDU_Generator/LIP_PDU_Generator.htm 
 
 // const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
@@ -56,7 +56,7 @@ const { convertToDataElements } = require("./utils");
 // console.log(reportTriggersRequest.toData(), testdata.split(" ").join(""))
 
 // const PduReportTriggersResponse = require("./pdu/ReportTriggersResponse");
-// const testdata = "62 01 01 45 C1 00 27 0F 9F 42 21 23 00 6A D0 0F 68 ";
+// const testdata = "62 1A 00 4C 90 00 09 62 0C 9E A9 4A B5 80 ";
 // const reportTriggersResponse = PduReportTriggersResponse.fromData(testdata.split(" ").join(""));
 // console.log(convertToDataElements(reportTriggersResponse))
 // console.log(reportTriggersResponse.toData(), testdata.split(" ").join(""))
@@ -67,11 +67,11 @@ const { convertToDataElements } = require("./utils");
 // console.log(reportBasicLocationParametersRequest)
 // console.log(reportBasicLocationParametersRequest.toData(), testdata.split(" ").join(""))
 
-const PduReportBasicLocationParametersResponse = require("./pdu/ReportBasicLocationParametersResponse");
-const testdata = "66 01 00 00 38 F2 50 38 20 ";
-const reportBasicLocationParametersResponse = PduReportBasicLocationParametersResponse.fromData(testdata.split(" ").join(""));
-console.log(convertToDataElements(reportBasicLocationParametersResponse))
-console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").join(""))
+// const PduReportBasicLocationParametersResponse = require("./pdu/ReportBasicLocationParametersResponse");
+// const testdata = "66 01 00 00 38 F2 50 38 20 ";
+// const reportBasicLocationParametersResponse = PduReportBasicLocationParametersResponse.fromData(testdata.split(" ").join(""));
+// console.log(convertToDataElements(reportBasicLocationParametersResponse))
+// console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").join(""))
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
@@ -83,11 +83,11 @@ console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").
 // const shortReport = PduShortLocationReport.fromData("002F7DC24FA7B103E810")
 // console.log(shortReport, shortReport.toData())
 
-// const PduLongLocationReport = require("./pdu/LongLocationReport");
-// const testdata = "4E 7B 71 32 04 8C 01 AB 40 3D A4 9C 00 25 AC 08 02 20 05 A0 0F 25 13 A8 04 9C BA 12 34 56 78 90 ";
-// const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
-// console.log(longReport.toData(), testdata.split(" ").join(""))
-// console.log(longReport.type5Elements)
+const PduLongLocationReport = require("./pdu/LongLocationReport");
+const testdata = "4EF479D140BDF7493E9EC286F502164080";
+const longReport = PduLongLocationReport.fromData(testdata.split(" ").join(""));
+console.log(longReport.toData(), testdata.split(" ").join(""))
+console.log(longReport)
 
 // const PduLocationReportAcknowledgement = require("./pdu/LocationReportAcknowledgement");
 // const testdata = "50 00";
@@ -110,3 +110,40 @@ console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").
 // const immediateLocationReportRequest = PduImmediateLocationReportRequest.fromData(testdata.split(" ").join(""));
 // console.log(immediateLocationReportRequest.toData(), testdata.split(" ").join(""))
 // console.log(immediateLocationReportRequest.type5Elements)
+
+
+
+// const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
+// const ElementType5TriggerDefinition = require("./elements/type-5/Type5TriggerDefinition");
+// const ElementMaximumReportingInterval = require("./elements/type-5/triggers/MaximumReportingInterval");
+// const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require("./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy");
+// const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require("./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy");
+// const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require("./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy");
+
+// const maxReportingInterval = new ElementMaximumReportingInterval("30s");
+// const maxIntervalTriggerDefinition = new ElementType5TriggerDefinition("MAXIMUM-REPORTING-INTERVAL", true, { maximumReportingInterval: maxReportingInterval });
+// const directionOfTravelAndDirectionOfTravelAccuracy = new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
+//     returnValue: "DIRECTION-OF-TRAVEL-AND-UNCERTAINTY-REQUIRED",
+//     requestedRequired: "REQUIRED",
+//     directionOfTravelAccuracyRequired: "BEST-EFFORT"
+// });
+
+// const horizontalVelocityAndHorizontalVelocityAccuracy = new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
+//     returnValue: "HORIZONTAL-VELOCITY-AND-UNCERTAINTY-REQUIRED",
+//     requestedRequired: "REQUIRED",
+//     horizontalVelocityAccuracyRequired: "<6KM/U"
+// });
+
+// const locationAltitudeAndLocationAltitudeAccuracy = new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
+//     returnValue: "LOCATION-ALTITUDE-AND-UNCERTAINTY-REQUIRED",
+//     requestedRequired: "REQUIRED",
+//     locationAltitudeAccuracyRequired: "BEST-EFFORT",
+// });
+
+// const addModifyTriggerRequest = new PduAddModifyTriggerRequest({
+//     acknowledgementRequest: true,
+//     reportType: "LONG-WITH-TIME-OF-POSITION",
+//     type5Elements: [directionOfTravelAndDirectionOfTravelAccuracy, horizontalVelocityAndHorizontalVelocityAccuracy, locationAltitudeAndLocationAltitudeAccuracy, maxIntervalTriggerDefinition]
+// });
+
+// console.log(addModifyTriggerRequest.toData());

@@ -1,14 +1,14 @@
 const ElementScaffold = require('../scaffold');
 
 const def = {
-    "LESS-THAN-1-METER": 0,
-    "LESS-THAN-2-METERS": 1,
-    "LESS-THAN-5-METERS": 2,
-    "LESS-THAN-15-METERS": 3,
-    "LESS-THAN-50-METERS": 4,
-    "LESS-THAN-150-METERS": 5,
-    "LESS-THAN-300-METERS": 6,
-    "BEST-EFFORT-OR-NOT-SUPPORTED": 7,
+    "<1m": 0,
+    "<2m": 1,
+    "<5m": 2,
+    "<15m": 3,
+    "<50m": 4,
+    "<150m": 5,
+    "<300m": 6,
+    "BEST-EFFORT": 7,
 };
 
 class ElementLocationAltitudealtitudeUncertainty extends ElementScaffold {
