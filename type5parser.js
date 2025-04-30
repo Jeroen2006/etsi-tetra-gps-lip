@@ -14,6 +14,7 @@ const ElementType5LocationInformationDestination = require('./elements/type-5/Ty
 const ElementType5LocationMessageReference = require('./elements/type-5/Type5LocationMessageReference');
 const ElementType5SDSType1Value = require('./elements/type-5/Type5SDSType1Value');
 const ElementType5TriggerDefinition = require('./elements/type-5/Type5TriggerDefinition');
+const ElementType5TriggerRemoval = require('./elements/type-5/Type5TriggerRemoval');
 
 function parseType5Elements(data){
     const elements = [];
@@ -81,6 +82,9 @@ function parseType5Elements(data){
             case "TRIGGER-DEFINITION":
                 element = ElementType5TriggerDefinition.fromValue(elementBits);
                 break;  
+            case "TRIGGER-REMOVAL":
+                element = ElementType5TriggerRemoval.fromValue(elementBits);
+                break;
             case "EXTENDED-TYPE-5-ELEMENT":
                 // Handle extended type 5 elements here
                 throw new Error("Extended Type 5 Elements are not supported yet.");
