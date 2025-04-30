@@ -9,7 +9,7 @@ class ElementTypeOfAdditionalData extends ElementScaffold {
     constructor(typeOfAdditionalData) {
         super(1, 1); // 1-bit field
 
-        if (TypeOfAdditionalData in def) {
+        if (typeOfAdditionalData in def) {
             this.typeOfAdditionalData = typeOfAdditionalData;
             this.value = def[typeOfAdditionalData];
         } else {
