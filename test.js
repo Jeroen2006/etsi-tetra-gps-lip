@@ -31,11 +31,23 @@ const { convertToDataElements } = require("./utils");
 // console.log(removeTriggerRequest.type5Elements)
 // console.log(removeTriggerRequest.toData(), testdata.split(" ").join(""))
 
-const PduRemoveTriggerResponse = require("./pdu/RemoveTriggerResponse");
-const testdata = "5E 31 10 02 D0 07 92 89 D4 02 4E 5D 09 1A 2B 3C 48 53 A8 88 91 80 35 68 07 B4 ";
-const removeTriggerResponse = PduRemoveTriggerResponse.fromData(testdata.split(" ").join(""));
-console.log(removeTriggerResponse.toData(), testdata.split(" ").join(""))
-console.log(removeTriggerResponse.type5Elements)
+// const PduRemoveTriggerResponse = require("./pdu/RemoveTriggerResponse");
+// const testdata = "5E 31 10 02 D0 07 92 89 D4 02 4E 5D 09 1A 2B 3C 48 53 A8 88 91 80 35 68 07 B4 ";
+// const removeTriggerResponse = PduRemoveTriggerResponse.fromData(testdata.split(" ").join(""));
+// console.log(removeTriggerResponse.toData(), testdata.split(" ").join(""))
+// console.log(removeTriggerResponse.type5Elements)
+
+// const PduLocationReportingEnableDisableRequest = require("./pdu/LocationReportingEnableDisableRequest");
+// const testdata = "69 80 8B 82 01 E4 A2 90 90 ";
+// const locationReportingEnableDisableRequest = PduLocationReportingEnableDisableRequest.fromData(testdata.split(" ").join(""));
+// console.log(locationReportingEnableDisableRequest)
+// console.log(locationReportingEnableDisableRequest.toData(), testdata.split(" ").join(""))
+
+const PduLocationReportingEnableDisableResponse = require("./pdu/LocationReportingEnableDisableResponse");
+const testdata = "6B 01 1D 08 03 C9 44 EA 01 24 ";
+const locationReportingEnableDisableResponse = PduLocationReportingEnableDisableResponse.fromData(testdata.split(" ").join(""));
+console.log(locationReportingEnableDisableResponse)
+console.log(locationReportingEnableDisableResponse.toData(), testdata.split(" ").join(""))
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
