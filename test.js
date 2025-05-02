@@ -105,11 +105,11 @@
 // console.log(basicLocationParametersRequest)
 
 // 
-const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
-const testdata = "44 09 0F 10 60 ";
-const immediateLocationReportRequest = PduImmediateLocationReportRequest.fromData(testdata.split(" ").join(""));
-console.log(immediateLocationReportRequest.toData(), testdata.split(" ").join(""))
-console.log(immediateLocationReportRequest.type5Elements)
+// const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
+// const testdata = "44 09 0F 10 60 ";
+// const immediateLocationReportRequest = PduImmediateLocationReportRequest.fromData(testdata.split(" ").join(""));
+// console.log(immediateLocationReportRequest.toData(), testdata.split(" ").join(""))
+// console.log(immediateLocationReportRequest.type5Elements)
 
 
 
@@ -141,3 +141,50 @@ console.log(immediateLocationReportRequest.type5Elements)
 // console.log(immediateLocationReportRequest.toData());
 
 //4C5000000000000000017F80000C2144 //long report yes need fix thnaks
+
+
+const PduBasicLocationParametersRequest = require("./pdu/BasicLocationParametersRequest");
+const ElementSSI = require("./elements/type-5/address/Ssi");
+const ElementType5LocationInformationDestination = require("./elements/type-5/Type5LocationInformationDestination");
+const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require("./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy");
+const ElementType5HorizontalPositionAndHorizontalPositionAccuracy = require("./elements/type-5/Type5HorizontalPositionAndHorizontalPositionAccuracy");
+const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require("./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy");
+const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require("./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy");
+
+const directionOfTravel = new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
+    returnValue: "DIRECTION-OF-TRAVEL-REQUIRED",
+    requestedRequired: "REQUIRED",
+    directionOfTravelAccuracyRequired: "BEST-EFFORT"
+});
+
+const horizontalPosition = new ElementType5HorizontalPositionAndHorizontalPositionAccuracy({
+    returnValue: "HORIZONTAL-POSITION-AND-UNCERTAINTY-REQUIRED",
+    preferredShape: "CIRCLE-SHAPE-PREFERRED",
+    requestedRequired: "REQUIRED",
+    horizontalPositionAccuracyRequired: "BEST-EFFORT"
+});
+
+const horizontalVelocity = new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
+    returnValue: "HORIZONTAL-VELOCITY-REQUIRED",
+    requestedRequired: "REQUESTED-AND-REQUIRED",
+    horizontalVelocityAccuracyRequested: "<1,5KM/U",
+    horizontalVelocityAccuracyRequired: "<6KM/U"
+});
+
+const locationAltitude = new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
+    returnValue: "LOCATION-ALTITUDE-REQUIRED",
+    requestedRequired: "REQUIRED",
+    locationAltitudeAccuracyRequired: "BEST-EFFORT"
+});
+
+const targetSsi = new ElementSSI(9999);
+const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
+
+const basicLocationParametersRequest = new PduBasicLocationParametersRequest({
+    reportType: "LONG-WITH-TIME-OF-POSITION",
+    minimumReportingInterval: "10s",
+    acknowledgementRequest: false,
+    type5Elements: [directionOfTravel, horizontalPosition, horizontalVelocity, locationInformationDestination, locationAltitude]
+});
+
+console.log(basicLocationParametersRequest.toData());

@@ -10,7 +10,7 @@ const B = 5;
 const C = -4;
 
 const defHorizontalPositionAccuracy = {
-    63: "Best effort",
+    63: "BEST-EFFORT",
 };
 
 for (let i = 0; i < 63; i++) {
