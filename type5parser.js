@@ -18,6 +18,7 @@ const ElementType5TriggerRemoval = require('./elements/type-5/Type5TriggerRemova
 const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require('./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy');
 const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require('./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy');
 const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require('./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy');
+const ElementType5HorizontalPositionAndHorizontalPositionAccuracy = require('./elements/type-5/Type5HorizontalPositionAndHorizontalPositionAccuracy');
 
 function parseType5Elements(data){
     const elements = [];
@@ -96,6 +97,9 @@ function parseType5Elements(data){
                 break;
             case "HORIZONTAL-VELOCITY-AND-ACCURACY":
                 element = ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy.fromValue(elementBits);
+                break;
+            case "HORIZONTAL-POSITION-AND-ACCURACY":
+                element = ElementType5HorizontalPositionAndHorizontalPositionAccuracy.fromValue(elementBits);
                 break;
             case "EXTENDED-TYPE-5-ELEMENT":
                 // Handle extended type 5 elements here
