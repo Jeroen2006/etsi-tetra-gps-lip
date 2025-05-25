@@ -9,7 +9,7 @@ const { metersToString } = require('../../utils');
 
 // Direct table values from the spec
 const lookupTable = {
-    63: "Best effort",
+    63: "BEST-EFFORT",
 };
 
 //for loop 0-62

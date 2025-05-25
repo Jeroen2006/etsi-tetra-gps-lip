@@ -143,48 +143,66 @@
 //4C5000000000000000017F80000C2144 //long report yes need fix thnaks
 
 
-const PduBasicLocationParametersRequest = require("./pdu/BasicLocationParametersRequest");
-const ElementSSI = require("./elements/type-5/address/Ssi");
-const ElementType5LocationInformationDestination = require("./elements/type-5/Type5LocationInformationDestination");
-const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require("./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy");
-const ElementType5HorizontalPositionAndHorizontalPositionAccuracy = require("./elements/type-5/Type5HorizontalPositionAndHorizontalPositionAccuracy");
-const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require("./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy");
-const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require("./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy");
+// const PduBasicLocationParametersRequest = require("./pdu/BasicLocationParametersRequest");
+// const ElementSSI = require("./elements/type-5/address/Ssi");
+// const ElementType5LocationInformationDestination = require("./elements/type-5/Type5LocationInformationDestination");
+// const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require("./elements/type-5/Type5DirectionOfTravelAndDirectionOfTravelAccuracy");
+// const ElementType5HorizontalPositionAndHorizontalPositionAccuracy = require("./elements/type-5/Type5HorizontalPositionAndHorizontalPositionAccuracy");
+// const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require("./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy");
+// const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require("./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy");
 
-const directionOfTravel = new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
-    returnValue: "DIRECTION-OF-TRAVEL-REQUIRED",
-    requestedRequired: "REQUIRED",
-    directionOfTravelAccuracyRequired: "BEST-EFFORT"
-});
+// const directionOfTravel = new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
+//     returnValue: "DIRECTION-OF-TRAVEL-REQUIRED",
+//     requestedRequired: "REQUIRED",
+//     directionOfTravelAccuracyRequired: "BEST-EFFORT"
+// });
 
-const horizontalPosition = new ElementType5HorizontalPositionAndHorizontalPositionAccuracy({
-    returnValue: "HORIZONTAL-POSITION-AND-UNCERTAINTY-REQUIRED",
-    preferredShape: "CIRCLE-SHAPE-PREFERRED",
-    requestedRequired: "REQUIRED",
-    horizontalPositionAccuracyRequired: "BEST-EFFORT"
-});
+// const horizontalPosition = new ElementType5HorizontalPositionAndHorizontalPositionAccuracy({
+//     returnValue: "HORIZONTAL-POSITION-AND-UNCERTAINTY-REQUIRED",
+//     preferredShape: "CIRCLE-SHAPE-PREFERRED",
+//     requestedRequired: "REQUIRED",
+//     horizontalPositionAccuracyRequired: "BEST-EFFORT"
+// });
 
-const horizontalVelocity = new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
-    returnValue: "HORIZONTAL-VELOCITY-REQUIRED",
-    requestedRequired: "REQUESTED-AND-REQUIRED",
-    horizontalVelocityAccuracyRequested: "<1,5KM/U",
-    horizontalVelocityAccuracyRequired: "<6KM/U"
-});
+// const horizontalVelocity = new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
+//     returnValue: "HORIZONTAL-VELOCITY-REQUIRED",
+//     requestedRequired: "REQUESTED-AND-REQUIRED",
+//     horizontalVelocityAccuracyRequested: "<1,5KM/U",
+//     horizontalVelocityAccuracyRequired: "<6KM/U"
+// });
 
-const locationAltitude = new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
-    returnValue: "LOCATION-ALTITUDE-REQUIRED",
-    requestedRequired: "REQUIRED",
-    locationAltitudeAccuracyRequired: "BEST-EFFORT"
-});
+// const locationAltitude = new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
+//     returnValue: "LOCATION-ALTITUDE-REQUIRED",
+//     requestedRequired: "REQUIRED",
+//     locationAltitudeAccuracyRequired: "BEST-EFFORT"
+// });
 
-const targetSsi = new ElementSSI(9999);
-const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
+// const targetSsi = new ElementSSI(9999);
+// const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
 
-const basicLocationParametersRequest = new PduBasicLocationParametersRequest({
-    reportType: "LONG-WITH-TIME-OF-POSITION",
-    minimumReportingInterval: "10s",
-    acknowledgementRequest: false,
-    type5Elements: [directionOfTravel, horizontalPosition, horizontalVelocity, locationInformationDestination, locationAltitude]
-});
+// const basicLocationParametersRequest = new PduBasicLocationParametersRequest({
+//     reportType: "LONG-WITH-TIME-OF-POSITION",
+//     minimumReportingInterval: "10s",
+//     acknowledgementRequest: false,
+//     type5Elements: [directionOfTravel, horizontalPosition, horizontalVelocity, locationInformationDestination, locationAltitude]
+// });
 
-console.log(basicLocationParametersRequest.toData());
+// console.log(basicLocationParametersRequest.toData());
+
+// const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
+// const ElementType5TriggerDefinition = require("./elements/type-5/Type5TriggerDefinition");
+// const ElementMaximumReportingInterval = require("./elements/type-5/triggers/MaximumReportingInterval");
+
+// const maxReportingInterval = new ElementMaximumReportingInterval("30s");
+// const maxIntervalTriggerDefinition = new ElementType5TriggerDefinition("MAXIMUM-REPORTING-INTERVAL", true, { maximumReportingInterval: maxReportingInterval });
+// const addModifyTriggerRequest = new PduAddModifyTriggerRequest({
+//     acknowledgementRequest: false,
+//     reportType: "LONG-WITH-TIME-OF-POSITION",
+//     type5Elements: [maxIntervalTriggerDefinition]
+// });
+// console.log(addModifyTriggerRequest.toData());
+
+// console.log(ElementMaximumReportingInterval.getDefinition())
+
+const ElementMaximumReportingDistance = require("./elements/type-5/triggers/MaximumReportingDistance");
+console.log(ElementMaximumReportingDistance.getDefinition())
