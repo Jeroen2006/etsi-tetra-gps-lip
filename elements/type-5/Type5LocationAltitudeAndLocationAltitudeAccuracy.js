@@ -73,7 +73,6 @@ class ElementType5LocationAltitudeAndLocationAltitudeAccuracy extends ElementSca
     }
 
     static fromValue(value) {
-        console.log("fromValue", value)
         const returnValueBits = value.slice(0, 1);
         const requestedRequiredBits = value.slice(2, 4);
         
@@ -103,8 +102,6 @@ class ElementType5LocationAltitudeAndLocationAltitudeAccuracy extends ElementSca
             const locationAltitudeAccuracyRequiredValue = parseInt(locationAltitudeAccuracyRequiredBits, 2);
             locationAltitudeAccuracyRequired = Object.keys(defLocationAltitudeAccuracy).find(key => defLocationAltitudeAccuracy[key] === locationAltitudeAccuracyRequiredValue);
         }
-
-        //console.log("returnValue", returnValue, "requestedRequired", requestedRequired, "locationAltitudeAccuracyRequested", locationAltitudeAccuracyRequested, "locationAltitudeAccuracyRequired", locationAltitudeAccuracyRequired)
 
         return new ElementType5LocationAltitudeAndLocationAltitudeAccuracy({
             returnValue,

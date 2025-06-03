@@ -37,8 +37,6 @@ class PduLocationReportAcknowledgement {
         var binaryString = pduType + pduTypeExtension + "00000000"; // 8 bits of padding
         const hexString = binaryToHex(binaryString);
 
-        console.log(binaryString);
-
         return hexString;
     }
 }

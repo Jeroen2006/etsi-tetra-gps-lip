@@ -73,7 +73,6 @@ class ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy extends Elemen
     }
 
     static fromValue(value) {
-        console.log("fromValue", value)
         const returnValueBits = value.slice(0, 1);
         const requestedRequiredBits = value.slice(1, 3);
         
@@ -103,9 +102,7 @@ class ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy extends Elemen
             const horizontalVelocityAccuracyRequiredValue = parseInt(horizontalVelocityAccuracyRequiredBits, 2);
             horizontalVelocityAccuracyRequired = Object.keys(defHorizontalVelocityAccuracy).find(key => defHorizontalVelocityAccuracy[key] === horizontalVelocityAccuracyRequiredValue);
         }
-
-        //console.log("returnValue", returnValue, "requestedRequired", requestedRequired, "horizontalVelocityAccuracyRequested", horizontalVelocityAccuracyRequested, "horizontalVelocityAccuracyRequired", horizontalVelocityAccuracyRequired)
-
+        
         return new ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy({
             returnValue,
             requestedRequired,

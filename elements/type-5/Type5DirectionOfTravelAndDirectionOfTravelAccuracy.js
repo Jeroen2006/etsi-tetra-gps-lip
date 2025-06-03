@@ -73,7 +73,6 @@ class ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy extends ElementS
     }
 
     static fromValue(value) {
-        console.log("fromValue", value)
         const returnValueBits = value.slice(0, 1);
         const requestedRequiredBits = value.slice(1, 3);
         
@@ -103,9 +102,6 @@ class ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy extends ElementS
             const directionOfTravelAccuracyRequiredValue = parseInt(directionOfTravelAccuracyRequiredBits, 2);
             directionOfTravelAccuracyRequired = Object.keys(defDirectionOfTravelAccuracy).find(key => defDirectionOfTravelAccuracy[key] === directionOfTravelAccuracyRequiredValue);
         }
-
-        //console.log("returnValue", returnValue, "requestedRequired", requestedRequired, "directionOfTravelAccuracyRequested", directionOfTravelAccuracyRequested, "directionOfTravelAccuracyRequired", directionOfTravelAccuracyRequired)
-
         return new ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy({
             returnValue,
             requestedRequired,

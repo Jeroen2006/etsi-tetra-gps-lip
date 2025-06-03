@@ -2,6 +2,15 @@
 // const { convertToDataElements } = require("./utils");
 // ->>>>>> http://pdu.argos.ws/LIP_PDU_Generator/LIP_PDU_Generator.htm 
 
+const ElementType5TemporaryControlParameterDefinition = require("./elements/type-5/Type5TemporaryControlParameterDefinition");
+const PduReportingTempControlRequest = require("./pdu/ReportingTempControlRequest");
+const testdata = "6D 8B 14 32 00 ";
+const reportingTempControlRequest = PduReportingTempControlRequest.fromData(testdata.split(" ").join(""));
+
+console.log(reportingTempControlRequest)
+console.log(reportingTempControlRequest.toData(), testdata.split(" ").join(""));
+
+
 // const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
 // const targetSsi = new ElementSSI(9999);
 // const locationInformationDestination = new ElementType5LocationInformationDestination(targetSsi);
@@ -74,7 +83,7 @@
 // console.log(reportBasicLocationParametersResponse.toData(), testdata.split(" ").join(""))
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
-// const testdata = "59 A3 A1 00 79 28 9D 40 24 CD 08 2E 30 ";
+// const testdata = "59 A6 00 01 20 91 80 35 68 07 B4 40 ";
 // const addModifyTriggerRequest = PduAddModifyTriggerRequest.fromData(testdata.split(" ").join(""));
 // //console.log(addModifyTriggerRequest)
 // console.log(addModifyTriggerRequest.toData(), testdata.split(" ").join(""))
@@ -115,19 +124,34 @@
 
 // const PduAddModifyTriggerRequest = require("./pdu/AddModifyTriggersRequest");
 // const ElementType5TriggerDefinition = require("./elements/type-5/Type5TriggerDefinition");
-// const ElementMaximumReportingInterval = require("./elements/type-5/triggers/MaximumReportingInterval");
+// // const ElementMaximumReportingInterval = require("./elements/type-5/triggers/MaximumReportingInterval");
 
-// const maxReportingInterval = new ElementMaximumReportingInterval("30s");
-// const maxIntervalTriggerDefinition = new ElementType5TriggerDefinition("MAXIMUM-REPORTING-INTERVAL", true, { maximumReportingInterval: maxReportingInterval });
+// // const maxReportingInterval = new ElementMaximumReportingInterval("30s");
+// // const maxIntervalTriggerDefinition = new ElementType5TriggerDefinition("MAXIMUM-REPORTING-INTERVAL", true, { maximumReportingInterval: maxReportingInterval });
+
+// const ElementTriggerLocationCircle = require("./elements/type-5/triggers/LocationCircle");
+
+// const baseCircle = new ElementTriggerLocationCircle({
+//     latitude: 63.286543,
+//     longitude: 25.57632,
+//     horizontalPositionUncertainty: "<11m"
+// });
+
+// const approachingBaseTrigger = new ElementType5TriggerDefinition("APPROACHING-POINT", false, { locationCircle: baseCircle });
 
 // const addModifyTriggerRequest = new PduAddModifyTriggerRequest({
 //     acknowledgementRequest: true,
 //     reportType: "LONG-WITH-TIME-OF-POSITION",
-//     type5Elements: [maxIntervalTriggerDefinition]
+//     type5Elements: [approachingBaseTrigger]
 // });
 
-// console.log(addModifyTriggerRequest.toData());
+// const reverseElement = PduAddModifyTriggerRequest.fromData(addModifyTriggerRequest.toData());
+// // const reverseElement = PduAddModifyTriggerRequest.fromData("59A60001209180356807B460");
+// // console.log("59A60001209180356807B460" == reverseElement.toData())
 
+
+// console.log(addModifyTriggerRequest.toData() == reverseElement.toData());
+// console.log()
 
 // const PduImmediateLocationReportRequest = require("./pdu/ImmediateLocationReportRequest");
 // const ElementType5MaximumResponseTime = require("./elements/type-5/Type5MaximumResponseTime");
@@ -204,5 +228,5 @@
 
 // console.log(ElementMaximumReportingInterval.getDefinition())
 
-const ElementMaximumReportingDistance = require("./elements/type-5/triggers/MaximumReportingDistance");
-console.log(ElementMaximumReportingDistance.getDefinition())
+// const ElementMaximumReportingDistance = require("./elements/type-5/triggers/MaximumReportingDistance");
+// console.log(ElementMaximumReportingDistance.getDefinition())

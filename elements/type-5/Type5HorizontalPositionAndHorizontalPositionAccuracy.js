@@ -87,7 +87,6 @@ class ElementType5HorizontalPositionAndHorizontalPositionAccuracy extends Elemen
     }
 
     static fromValue(value) {
-        console.log("fromValue", value)
         const returnValueBits = value.slice(0, 1);
         const preferredShapeBits = value.slice(1, 2);
         const requestedRequiredBits = value.slice(2, 4);
@@ -120,8 +119,6 @@ class ElementType5HorizontalPositionAndHorizontalPositionAccuracy extends Elemen
             const horizontalPositionAccuracyRequiredValue = parseInt(horizontalPositionAccuracyRequiredBits, 2);
             horizontalPositionAccuracyRequired = defHorizontalPositionAccuracy[horizontalPositionAccuracyRequiredValue];
         }
-
-        console.log("returnValue", returnValueValue, "requestedRequired", requestedRequired, "horizontalPositionAccuracyRequested", horizontalPositionAccuracyRequested, "horizontalPositionAccuracyRequired", horizontalPositionAccuracyRequired)
 
         return new ElementType5HorizontalPositionAndHorizontalPositionAccuracy({
             returnValue,

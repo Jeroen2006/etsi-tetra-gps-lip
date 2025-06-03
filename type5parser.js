@@ -19,6 +19,7 @@ const ElementType5DirectionOfTravelAndDirectionOfTravelAccuracy = require('./ele
 const ElementType5LocationAltitudeAndLocationAltitudeAccuracy = require('./elements/type-5/Type5LocationAltitudeAndLocationAltitudeAccuracy');
 const ElementType5HorizontalVelocityAndHorizontalVelocityAccuracy = require('./elements/type-5/Type5HorizontalVelocityAndHorizontalVelocityAccuracy');
 const ElementType5HorizontalPositionAndHorizontalPositionAccuracy = require('./elements/type-5/Type5HorizontalPositionAndHorizontalPositionAccuracy');
+const ElementType5TemporaryControlParameterDefinition = require('./elements/type-5/Type5TemporaryControlParameterDefinition');
 
 function parseType5Elements(data){
     const elements = [];
@@ -104,6 +105,10 @@ function parseType5Elements(data){
             case "EXTENDED-TYPE-5-ELEMENT":
                 // Handle extended type 5 elements here
                 throw new Error("Extended Type 5 Elements are not supported yet.");
+                break;
+            // case "TEMPORARY-CONTROL-PARAMETER-DEFINITION":
+            //     element = ElementType5TemporaryControlParameterDefinition.fromValue(elementBits);
+            //     break;
             default:
                 element = undefined;
                 console.error(`Unsupported element identifier: ${elementIdentifier}`);

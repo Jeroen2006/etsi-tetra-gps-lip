@@ -14,8 +14,9 @@ class ElementType5ElementLength extends ElementScaffold {
         if (elementLength <= 63) {
             bitString = elementLength.toString(2).padStart(6, '0');
         } else {
-            var elementLengthExtension = elementLength / 8;
+            var elementLengthExtension = Math.ceil((elementLength / 8)) - 7;
             bitString = "000000" + elementLengthExtension.toString(2).padStart(7, '0');
+            console.log(bitString)
         }
         this.elementLength = elementLength;
         this.value = binaryToBigInt(bitString);
@@ -27,12 +28,14 @@ class ElementType5ElementLength extends ElementScaffold {
         if (typeof value === 'string') bitString = value;
         else if (typeof value === 'number') bitString = value.toString(2);
 
+        console.log(bitString)
+
         var elementLength = 0;
         const elementLengthBits = bitString.slice(0, 6);
 
         if(elementLengthBits == "000000"){
             const elementLengthExtensionBits = bitString.slice(6, 13);
-            elementLength = (parseInt(elementLengthExtensionBits, 2) * 8) + 64;
+            elementLength = (parseInt(elementLengthExtensionBits, 2) * 8) + 56;
         } else {
             elementLength = parseInt(elementLengthBits, 2);
         }

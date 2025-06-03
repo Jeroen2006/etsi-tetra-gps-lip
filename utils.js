@@ -17,6 +17,12 @@ function binaryToHex(bits) {
     if (octets[octets.length - 1].length < 4) octets[octets.length - 1] = octets[octets.length - 1].padEnd(4, '0');
 
     const hex = octets.map(octet => parseInt(octet, 2).toString(16).toUpperCase()).join('');
+
+    //split back into octets, if the last octet is not 4 bits, pad it with zeros
+    if (hex.length % 2 !== 0) {
+        return hex + '0'; // Ensure even length for hex representation
+    }
+
     return hex;
 
     // const bigInt = binaryToBigInt(bits);
@@ -47,15 +53,19 @@ function secondsToString(rawSeconds){
     return `${formattedDays}${formattedHours}${formattedMinutes}${formattedSeconds}`.trim();
 }
 
-function metersToString(meters){
+function metersToString(meters, kmDecimals = 1) {
     if(meters < 1000){
         return `${meters}m`;
     } 
 
     const kilometers = meters / 1000;
-    const hectometers = Math.floor(kilometers * 10) / 10;
+    // const hectometers = Math.floor(kilometers * 10) / 10;
+    var kmString = kilometers.toFixed(kmDecimals);
 
-    return `${hectometers}km`;
+    //remove trailing zeros
+    kmString = kmString.replace(/\.?0+$/, '');
+
+    return `${kmString}km`;
 }
 
 

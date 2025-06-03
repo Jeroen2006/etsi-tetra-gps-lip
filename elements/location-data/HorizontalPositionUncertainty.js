@@ -49,6 +49,10 @@ class ElementHorizontalPositionUncertainty extends ElementScaffold {
         return isValidEncodedHpu(horizontalPositionUncertainty);
     }
 
+    static getDefinition() {
+        return lookupTable;
+    }
+
 }
 
 module.exports = ElementHorizontalPositionUncertainty;
